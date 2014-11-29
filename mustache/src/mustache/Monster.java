@@ -9,7 +9,7 @@ public class Monster
 {
 	private float x;
 	private float y;
-	private double vitesse;
+	private double speed;
 	private Image sprite;
 	
 	public Monster()
@@ -21,18 +21,7 @@ public class Monster
 			e.printStackTrace();
 		}
 		
-		vitesse = 0.2;
-	}
-	
-	public void deplacer(char dir, int delta)
-	{
-		switch (dir)
-		{
-			case 'N': y -= vitesse * delta; break;
-			case 'S': y += vitesse * delta; break;
-			case 'E': x += vitesse * delta; break;
-			case 'O': x -= vitesse * delta; break;
-		}
+		speed = 0.2;
 	}
 	
 	public void render()
@@ -42,11 +31,7 @@ public class Monster
 	
 	public void update(GameContainer gc, int delta)
 	{
-		Input key = gc.getInput();
-		
-		if (key.isKeyDown(Input.KEY_UP)) deplacer('N', delta);
-		else if (key.isKeyDown(Input.KEY_DOWN)) deplacer('S', delta);
-		else if (key.isKeyDown(Input.KEY_LEFT)) deplacer('O', delta);
-		else if (key.isKeyDown(Input.KEY_RIGHT)) deplacer('E', delta);
+		x++;
+		y++;
 	}
 }
