@@ -12,29 +12,25 @@ public class Mustache
 {
 	private float x;
 	private float y;
-	private int   width;
-	private int   height;
 	private Image mustache;
 	private boolean moving;
 	private double speed;
+	private int width;
+	private int height;
 	
-	public Mustache(int w, int h) {
-		this.width  = w;
-		this.height = h;
-	}
-	
-	public void init()
-	{
-		this.moving = false;
-				
-		this.speed = 0.2;
-		
-		x = this.width/2 - 90;
-		y = this.height/2 - 90;
+	public void init(float x, float y)
+	{	
+		speed = 0.2;
 		
 		try
 		{
 			mustache = new Image("res/sprites/mustache.jpg");
+			
+			this.x = x-(mustache.getWidth()/2);
+			this.y = y-(mustache.getHeight()/2);
+			
+			width = mustache.getWidth();
+			height = mustache.getHeight();
 		}
 		
 		catch (SlickException e)
@@ -69,7 +65,7 @@ public class Mustache
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(getMustache(), getX(), getY());
+		g.drawImage(getMustache(), x, y);
 	}
 	
 	public Image getMustache() {
@@ -77,11 +73,11 @@ public class Mustache
 	}
 	
 	public float getX() {
-		return this.x;
+		return this.x+(width/2);
 	}
 	
 	public float getY() {
-		return this.y;
+		return this.y+(height/2);
 	}
 	
 	public boolean getMoving() {

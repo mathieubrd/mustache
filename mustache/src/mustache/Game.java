@@ -29,12 +29,12 @@ public class Game extends BasicGame
 	public void init(GameContainer gc) throws SlickException
 	{
 		map = new Map();
-		mustache = new Mustache(gc.getWidth(), gc.getHeight());
+		mustache = new Mustache();
 		monster = new Monster();
 		sound = new Sound("res/sound/piou.ogg");
 		
 		map.init();
-		mustache.init();
+		mustache.init(gc.getWidth()/2, gc.getHeight()/2);
 		
 		sound.play();
 	}

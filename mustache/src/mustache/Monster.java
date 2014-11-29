@@ -10,16 +10,23 @@ public class Monster
 	private float y;
 	private double speed;
 	private Image sprite;
+	private int width;
+	private int height;
 	
 	public Monster()
 	{
-		try {
+		try
+		{
 			sprite = new Image("res/ia.png");
-		} catch (SlickException e) {
+			width = sprite.getWidth();
+			height = sprite.getHeight();
+			
+		}catch (SlickException e)
+		{
 			e.printStackTrace();
 		}
 		
-		speed = 0.1;
+		speed = 0.07;
 	}
 	
 	public void render()
@@ -27,12 +34,22 @@ public class Monster
 		sprite.draw(x ,y);
 	}
 	
+	public float getX()
+	{
+		return x+(width/2);
+	}
+	
+	public float getY()
+	{
+		return y+(height/2);
+	}
+	
 	public void update(GameContainer gc, int delta, float persoX, float persoY)
 	{
-		if (persoX > x) x += speed*delta;
+		if (persoX > getX()) x += speed*delta;
 		else x -= speed*delta;
 		
-		if (persoY > y) y += speed*delta;
+		if (persoY > getY()) y += speed*delta;
 		else y -= speed*delta;
 	}
 }
