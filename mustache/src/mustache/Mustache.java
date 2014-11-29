@@ -64,10 +64,10 @@ public class Mustache
 		int mouseX = key.getMouseX();
 		int mouseY = key.getMouseY();
 		
-		if (key.isKeyDown(Input.KEY_UP)) deplacer('N', delta);
-		if (key.isKeyDown(Input.KEY_DOWN)) deplacer('S', delta);
-		if (key.isKeyDown(Input.KEY_LEFT)) deplacer('O', delta);
-		if (key.isKeyDown(Input.KEY_RIGHT)) deplacer('E', delta);
+		if (key.isKeyDown(Input.KEY_UP) || key.isKeyDown(Input.KEY_Z) || key.isKeyDown(Input.KEY_W)) deplacer('N', delta);
+		if (key.isKeyDown(Input.KEY_DOWN) || key.isKeyDown(Input.KEY_S)) deplacer('S', delta);
+		if (key.isKeyDown(Input.KEY_LEFT) || key.isKeyDown(Input.KEY_Q) || key.isKeyDown(Input.KEY_A)) deplacer('O', delta);
+		if (key.isKeyDown(Input.KEY_RIGHT) || key.isKeyDown(Input.KEY_D)) deplacer('E', delta);
 		
 		rotate(mouseX, mouseY);
 	}
