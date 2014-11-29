@@ -5,8 +5,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.Animation;
 
 public class Mustache
 {
@@ -21,7 +19,7 @@ public class Mustache
 	
 	public void init(float x, float y)
 	{	
-		speed = 0.2;
+		speed = 0.35;
 		
 		try
 		{
