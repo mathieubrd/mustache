@@ -1,4 +1,5 @@
 package mustache;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 
@@ -15,6 +16,15 @@ public class Mustache
 		x = 0;
 		y = 0;
 		
-		SpriteSheet spriteSheet = new SpriteSheet("res/sprites/mustache.png", 64, 64);
+		try
+		{
+			SpriteSheet spriteSheet = new SpriteSheet("res/sprites/mustache.png", 64, 64);
+		}
+		
+		catch (SlickException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
