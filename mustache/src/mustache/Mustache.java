@@ -5,8 +5,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.Animation;
 
 public class Mustache
 {
@@ -18,10 +16,11 @@ public class Mustache
 	private int width;
 	private int height;
 	private double rotation;
+	private char dirB;
 	
 	public void init(float x, float y)
 	{	
-		speed = 0.2;
+		speed = 0.4;
 		
 		try
 		{
@@ -39,7 +38,7 @@ public class Mustache
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void rotate(int mouseX, int mouseY)
 	{
 		rotation = Math.atan2(mouseY-getY(), mouseX-getX());
@@ -71,6 +70,18 @@ public class Mustache
 		if (key.isKeyDown(Input.KEY_LEFT) || key.isKeyDown(Input.KEY_Q) || key.isKeyDown(Input.KEY_A)) deplacer('O', delta);
 		if (key.isKeyDown(Input.KEY_RIGHT) || key.isKeyDown(Input.KEY_D)) deplacer('E', delta);
 		
+		if(!moving) {
+			if(speed > 0){
+				deplacer(dirB,delta); 
+				speed -= 0.01;
+			}
+			else
+			{
+				this.moving = true;
+				speed = 0.2;
+			}
+		}
+		
 		rotate(mouseX, mouseY);
 	}
 	
@@ -78,6 +89,11 @@ public class Mustache
 		g.drawImage(getMustache(), x, y);
 		
 		g.drawString("Angle"+rotation, 10, 50);
+	}
+	
+	public void inertie(char c) {
+		this.moving = false;
+		this.dirB   = c;
 	}
 	
 	public Image getMustache() {
