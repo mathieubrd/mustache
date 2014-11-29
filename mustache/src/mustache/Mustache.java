@@ -69,7 +69,7 @@ public class Mustache
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(getMustache(), .getX(), getY());
+		g.drawImage(getMustache(), getX(), getY());
 	}
 	
 	public Image getMustache() {
