@@ -42,7 +42,7 @@ public class Game extends BasicGame
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
 		mustache.update(gc, delta);
-		monster.update(gc, delta);
+		monster.update(gc, delta, mustache.getX(), mustache.getY());
 	}
 	
 	public static void main(String[] args)
