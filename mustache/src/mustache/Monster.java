@@ -9,7 +9,7 @@ public class Monster
 {
 	private float x;
 	private float y;
-	private double vitesse;
+	private double speed;
 	private Image sprite;
 	
 	public Monster()
@@ -17,21 +17,20 @@ public class Monster
 		try {
 			sprite = new Image("res/ia.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		vitesse = 0.2;
+		speed = 0.2;
 	}
 	
 	public void deplacer(char dir, int delta)
 	{
 		switch (dir)
 		{
-			case 'N': y -= vitesse * delta; break;
-			case 'S': y += vitesse * delta; break;
-			case 'E': x += vitesse * delta; break;
-			case 'O': x -= vitesse * delta; break;
+			case 'N': y -= speed * delta; break;
+			case 'S': y += speed * delta; break;
+			case 'E': x += speed * delta; break;
+			case 'O': x -= speed * delta; break;
 		}
 	}
 	

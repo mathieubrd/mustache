@@ -36,6 +36,7 @@ public class Game extends BasicGame
 
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
+		mustache.update(gc, delta);
 		monster.update(gc, delta);
 	}
 	

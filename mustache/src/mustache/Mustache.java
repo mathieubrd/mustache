@@ -1,5 +1,7 @@
 package mustache;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.Animation;
@@ -11,9 +13,9 @@ public class Mustache
 	private int   width;
 	private int   height;
 	private Animation[] animations = new Animation[8];
-	private SpriteSheet sprite;
 	private boolean moving;
 	private int direction;
+	private double speed;
 	
 	public Mustache(int w, int h) {
 		this.width  = w;
@@ -25,6 +27,7 @@ public class Mustache
 		this.moving = false;
 		this.direction = 0;
 				
+		this.speed = 0.2;
 		
 		x = this.width/2 - 90;
 		y = this.height/2 - 90;
@@ -46,6 +49,25 @@ public class Mustache
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public void deplacer(char dir, int delta)
+	{
+		
+	}
+	
+	public void update(GameContainer gc, int delta)
+	{
+		Input key = gc.getInput();
+		
+		int mouseX = key.getMouseX();
+		int mouseY = key.getMouseY();
+		
+		if(mouseY < y) y -= speed * delta;
+		if(mouseY > y) y += speed * delta;
+		if(mouseX > x) x += speed * delta;
+		if(mouseX < x) x -= speed * delta;
+		
 	}
 	
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
