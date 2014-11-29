@@ -4,7 +4,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -44,15 +43,6 @@ public class Game extends BasicGame
 	{
 		mustache.update(gc, delta);
 		monster.update(gc, delta, mustache.getX(), mustache.getY());
-	}
-	
-	public void keyReleased(int key, char c) {
-		if(key == Input.KEY_UP    || key == Input.KEY_Z || key == Input.KEY_W) c = 'N';
-		if(key == Input.KEY_RIGHT || key == Input.KEY_D || key == Input.KEY_A) c = 'E';
-		if(key == Input.KEY_LEFT  || key == Input.KEY_Q) c = 'O';
-		if(key == Input.KEY_DOWN  || key == Input.KEY_S) c = 'S';
-		
-		mustache.inertie(c);
 	}
 	
 	public static void main(String[] args)
