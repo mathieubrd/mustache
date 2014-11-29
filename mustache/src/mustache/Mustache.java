@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -22,6 +21,8 @@ public class Mustache
 	private ArrayList<Bullet> bullets;
 	private Animation anim;
 	private SpriteSheet sprite;
+	
+	private int widthF, heightF;
 	
 	public void init(float x, float y)
 	{	
@@ -54,7 +55,7 @@ public class Mustache
 		
 		anim.getCurrentFrame().setRotation((float) rotation);
 		
-		// Rotate la frame après la frame courante pour éviter le clignotement
+		// Rotate la frame apres la frame courante pour eviter le clignotement
 		if (anim.getFrame() == anim.getFrameCount()-1)
 			anim.getImage(0).setRotation((float) rotation);
 		else
@@ -66,10 +67,22 @@ public class Mustache
 	{
 		switch (dir)
 		{
-			case 'N': y -= speed * delta; break;
-			case 'S': y += speed * delta; break;
-			case 'E': x += speed * delta; break;
-			case 'O': x -= speed * delta; break;
+			case 'N': 
+				y -= speed * delta; 
+				if(y < 0 - height/2) y = 0 - height/2;
+				break;
+			case 'S': 
+				y += speed * delta; 
+				if(y > heightF - height/2) y = heightF - height/2;
+				break;
+			case 'E': 
+				x += speed * delta; 
+				if(x > widthF - width/2) x = widthF- width/2;
+				break;
+			case 'O': 
+				x -= speed * delta; 
+				if(x < 0 - width/2) x = 0 - width/2;
+				break;
 		}
 	}
 	
@@ -107,6 +120,9 @@ public class Mustache
 		
 		for (Bullet b:bulletsToRemove)
 			bullets.remove(b);
+		
+		widthF  = gc.getWidth();
+		heightF = gc.getHeight();
 	}
 	
 	public void destroyBullet(Bullet bullet)
