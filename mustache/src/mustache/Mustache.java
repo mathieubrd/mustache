@@ -73,9 +73,11 @@ public class Mustache
 		}
 	}
 	
-	public void tirer()
+	public void shoot()
 	{
 		bullets.add(new Bullet(this, (float) rotation, getX(), getY()));
+		
+		SoundEffect.play("piou");
 	}
 	
 	public void update(GameContainer gc, int delta)
@@ -95,7 +97,7 @@ public class Mustache
 		if (key.isKeyDown(Input.KEY_RIGHT) || key.isKeyDown(Input.KEY_D)) deplacer('E', delta);
 		
 		// Click souris
-		if (key.isMousePressed(Input.MOUSE_LEFT_BUTTON)) tirer();
+		if (key.isMousePressed(Input.MOUSE_LEFT_BUTTON)) shoot();
 		
 		for (Bullet b:bullets)
 		{		

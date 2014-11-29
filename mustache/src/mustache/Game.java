@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 public class Game extends BasicGame
-{
+{	
 	private Map      map;
 	private Mustache mustache;
 	private Monster monster;
