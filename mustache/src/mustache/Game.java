@@ -2,6 +2,7 @@ package mustache;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -21,9 +22,11 @@ public class Game extends BasicGame
 
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		map.render(g);
+		g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
+		g.setColor(Color.red);
 		mustache.render(g);
 		monster.render();
+		g.setColor(Color.white);
 	}
 
 	public void init(GameContainer gc) throws SlickException

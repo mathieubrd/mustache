@@ -2,23 +2,26 @@ package mustache;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 public class Mustache
 {
 	private float x;
 	private float y;
-	private Image mustache;
 	private boolean moving;
 	private double speed;
 	private int width;
 	private int height;
 	private double rotation;
 	private ArrayList<Bullet> bullets;
+	private Animation anim;
+	private SpriteSheet sprite;
 	
 	public void init(float x, float y)
 	{	
@@ -26,13 +29,14 @@ public class Mustache
 		
 		try
 		{
-			mustache = new Image("res/sprites/mustache.jpg");
+			sprite = new SpriteSheet("res/sprites/moustache.png", 64, 32);
+			anim   = new Animation  (sprite, 200);
 			
-			this.x = x-(mustache.getWidth()/2);
-			this.y = y-(mustache.getHeight()/2);
+			this.x = x-(sprite.getWidth()/2);
+			this.y = y-(sprite.getHeight()/2);
 			
-			width = mustache.getWidth();
-			height = mustache.getHeight();
+			width = sprite.getSprite(0, 0).getWidth();
+			height = sprite.getSprite(0, 0).getHeight();
 			
 			bullets = new ArrayList<Bullet>();
 		}
@@ -48,7 +52,14 @@ public class Mustache
 		rotation = Math.atan2(mouseY-getY(), mouseX-getX());
 		rotation = Math.toDegrees(rotation)+90;
 		
-		mustache.setRotation((float) rotation);
+		anim.getCurrentFrame().setRotation((float) rotation);
+		
+		// Rotate la frame après la frame courante pour éviter le clignotement
+		if (anim.getFrame() == anim.getFrameCount()-1)
+			anim.getImage(0).setRotation((float) rotation);
+		else
+			anim.getImage(anim.getFrame()+1).setRotation((float) rotation);
+			
 	}
 	
 	public void deplacer(char dir, int delta)
@@ -76,6 +87,8 @@ public class Mustache
 		int mouseX = key.getMouseX();
 		int mouseY = key.getMouseY();
 		
+		rotate(mouseX, mouseY);
+		
 		if (key.isKeyDown(Input.KEY_UP) || key.isKeyDown(Input.KEY_Z) || key.isKeyDown(Input.KEY_W)) deplacer('N', delta);
 		if (key.isKeyDown(Input.KEY_DOWN) || key.isKeyDown(Input.KEY_S)) deplacer('S', delta);
 		if (key.isKeyDown(Input.KEY_LEFT) || key.isKeyDown(Input.KEY_Q) || key.isKeyDown(Input.KEY_A)) deplacer('O', delta);
@@ -83,8 +96,6 @@ public class Mustache
 		
 		// Click souris
 		if (key.isMousePressed(Input.MOUSE_LEFT_BUTTON)) tirer();
-		
-		rotate(mouseX, mouseY);
 		
 		for (Bullet b:bullets)
 		{		
@@ -104,15 +115,11 @@ public class Mustache
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(getMustache(), x, y);
+		anim.draw(x, y);
 		g.drawString("Instance bullets "+bullets.size(), 10, 25);
 		
 		for (Bullet b:bullets)
 			b.render(g);
-	}
-	
-	public Image getMustache() {
-		return this.mustache;
 	}
 	
 	public float getX() {
