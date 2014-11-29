@@ -17,6 +17,7 @@ public class Mustache
 	private double speed;
 	private int width;
 	private int height;
+	private double rotation;
 	
 	public void init(float x, float y)
 	{	
@@ -37,6 +38,14 @@ public class Mustache
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public void rotate(int mouseX, int mouseY)
+	{
+		rotation = Math.atan2(mouseY-getY(), mouseX-getX());
+		rotation = Math.toDegrees(rotation)+90;
+		
+		mustache.setRotation((float) rotation);
 	}
 	
 	public void deplacer(char dir, int delta)
@@ -62,10 +71,13 @@ public class Mustache
 		if (key.isKeyDown(Input.KEY_LEFT)) deplacer('O', delta);
 		if (key.isKeyDown(Input.KEY_RIGHT)) deplacer('E', delta);
 		
+		rotate(mouseX, mouseY);
 	}
 	
 	public void render(Graphics g) {
 		g.drawImage(getMustache(), x, y);
+		
+		g.drawString("Angle"+rotation, 10, 50);
 	}
 	
 	public Image getMustache() {
