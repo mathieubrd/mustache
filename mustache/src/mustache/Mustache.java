@@ -1,6 +1,7 @@
-import org.newdawn.slick.SpriteSheet;
+package mustache;
 
-ackage mustache;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.SpriteSheet;
 
 public class Mustache
 {
@@ -8,6 +9,7 @@ public class Mustache
 	private float y;
 	private int   largeur;
 	private int   hauteur;
+	private Animation[] animations = new Animation[8];
 	private SpriteSheet sprite;
 	
 	public void init()
@@ -15,6 +17,6 @@ public class Mustache
 		x = 0;
 		y = 0;
 		
-		SpriteSheet spriteSheet = new SpriteSheet("res/sprites/mustache.png", 64, 64);
+		SpriteSheet spriteSheet = new SpriteSheet("res/sprites/mustache.png", 179, 180);
 	}
 }
