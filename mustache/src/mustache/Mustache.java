@@ -17,6 +17,7 @@ public class Mustache
 	private Image mustache;
 	private boolean moving;
 	private double speed;
+	private int angle;
 	
 	public Mustache(int w, int h) {
 		this.width  = w;
@@ -61,6 +62,12 @@ public class Mustache
 		int mouseX = key.getMouseX();
 		int mouseY = key.getMouseY();
 		
+		double calc = 0;
+		if(mouseX >= getX() && mouseY <= getY()) calc = ((mouseX - getX()) / (getY() - mouseY));
+		
+		this.angle = (int) Math.tan(calc);
+		
+		
 		if (key.isKeyDown(Input.KEY_UP)) deplacer('N', delta);
 		if (key.isKeyDown(Input.KEY_DOWN)) deplacer('S', delta);
 		if (key.isKeyDown(Input.KEY_LEFT)) deplacer('O', delta);
@@ -69,7 +76,9 @@ public class Mustache
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(getMustache(), getX(), getY());
+		g.drawImage(mustache, getX(), getY());
+		mustache.setRotation(angle);
+		g.drawString("" + angle, 50, 50);
 	}
 	
 	public Image getMustache() {
