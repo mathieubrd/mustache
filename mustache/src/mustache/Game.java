@@ -5,11 +5,15 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 public class Game extends BasicGame
-{	
+{
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
+	
 	private Map      map;
 	private Mustache mustache;
 	private Monster monster;
@@ -44,6 +48,10 @@ public class Game extends BasicGame
 
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
+		Input key = gc.getInput();
+		
+		if (key.isKeyPressed(Input.KEY_ESCAPE)) gc.exit();
+		
 		mustache.update(gc, delta);
 		monster.update(gc, delta, mustache.getX(), mustache.getY());
 	}
@@ -56,7 +64,7 @@ public class Game extends BasicGame
 		{
 			AppGameContainer agc = new AppGameContainer(game);
 			
-			agc.setDisplayMode(800, 600, false);
+			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, true);
 			agc.start();
 		}
 		

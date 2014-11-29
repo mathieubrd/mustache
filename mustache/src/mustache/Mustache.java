@@ -21,9 +21,7 @@ public class Mustache
 	private ArrayList<Bullet> bullets;
 	private Animation anim;
 	private SpriteSheet sprite;
-	
-	private int widthF, heightF;
-	
+
 	public void init(float x, float y)
 	{	
 		speed = 0.35;
@@ -69,19 +67,19 @@ public class Mustache
 		{
 			case 'N': 
 				y -= speed * delta; 
-				if(y < 0 - height/2) y = 0 - height/2;
+				if(getY() < 0) y = 0 - height/2;
 				break;
 			case 'S': 
 				y += speed * delta; 
-				if(y > heightF - height/2) y = heightF - height/2;
+				if(getY() > Game.HEIGHT) y = Game.HEIGHT - height/2;
 				break;
 			case 'E': 
 				x += speed * delta; 
-				if(x > widthF - width/2) x = widthF- width/2;
+				if(getX() > Game.WIDTH) x = Game.WIDTH - width/2;
 				break;
 			case 'O': 
 				x -= speed * delta; 
-				if(x < 0 - width/2) x = 0 - width/2;
+				if(getX() < 0) x = 0 - width/2;
 				break;
 		}
 	}
@@ -122,9 +120,6 @@ public class Mustache
 		
 		for (Bullet b:bulletsToRemove)
 			bullets.remove(b);
-		
-		widthF  = gc.getWidth();
-		heightF = gc.getHeight();
 	}
 	
 	public void destroyBullet(Bullet bullet)
