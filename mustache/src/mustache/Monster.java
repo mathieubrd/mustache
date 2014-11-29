@@ -23,17 +23,6 @@ public class Monster
 		speed = 0.2;
 	}
 	
-	public void deplacer(char dir, int delta)
-	{
-		switch (dir)
-		{
-			case 'N': y -= speed * delta; break;
-			case 'S': y += speed * delta; break;
-			case 'E': x += speed * delta; break;
-			case 'O': x -= speed * delta; break;
-		}
-	}
-	
 	public void render()
 	{
 		sprite.draw(x ,y);
@@ -41,11 +30,7 @@ public class Monster
 	
 	public void update(GameContainer gc, int delta)
 	{
-		Input key = gc.getInput();
-		
-		if (key.isKeyDown(Input.KEY_UP)) deplacer('N', delta);
-		else if (key.isKeyDown(Input.KEY_DOWN)) deplacer('S', delta);
-		else if (key.isKeyDown(Input.KEY_LEFT)) deplacer('O', delta);
-		else if (key.isKeyDown(Input.KEY_RIGHT)) deplacer('E', delta);
+		x++;
+		y++;
 	}
 }
