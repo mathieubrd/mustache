@@ -5,12 +5,14 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class Game extends BasicGame
 {
 	private Map      map;
 	private Mustache mustache;
 	private Monster monster;
+	private Sound   sound;
 	
 	public Game(String title)
 	{
@@ -29,9 +31,12 @@ public class Game extends BasicGame
 		map = new Map();
 		mustache = new Mustache(gc.getWidth(), gc.getHeight());
 		monster = new Monster();
+		sound = new Sound("res/sound/piou.ogg");
 		
 		map.init();
 		mustache.init();
+		
+		sound.play();
 	}
 
 	public void update(GameContainer gc, int delta) throws SlickException
