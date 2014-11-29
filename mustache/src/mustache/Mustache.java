@@ -1,12 +1,12 @@
 package mustache;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.Animation;
 
 public class Mustache
 {
@@ -18,10 +18,11 @@ public class Mustache
 	private int width;
 	private int height;
 	private double rotation;
+	private ArrayList<Bullet> bullets;
 	
 	public void init(float x, float y)
 	{	
-		speed = 0.2;
+		speed = 0.35;
 		
 		try
 		{
@@ -32,6 +33,8 @@ public class Mustache
 			
 			width = mustache.getWidth();
 			height = mustache.getHeight();
+			
+			bullets = new ArrayList<Bullet>();
 		}
 		
 		catch (SlickException e)
@@ -59,25 +62,53 @@ public class Mustache
 		}
 	}
 	
+	public void tirer()
+	{
+		bullets.add(new Bullet(this, (float) rotation, getX(), getY()));
+	}
+	
 	public void update(GameContainer gc, int delta)
 	{
 		Input key = gc.getInput();
+		long  currentTime = System.currentTimeMillis();
+		ArrayList<Bullet> bulletsToRemove = new ArrayList<Bullet>();
 		
 		int mouseX = key.getMouseX();
 		int mouseY = key.getMouseY();
 		
-		if (key.isKeyDown(Input.KEY_UP)) deplacer('N', delta);
-		if (key.isKeyDown(Input.KEY_DOWN)) deplacer('S', delta);
-		if (key.isKeyDown(Input.KEY_LEFT)) deplacer('O', delta);
-		if (key.isKeyDown(Input.KEY_RIGHT)) deplacer('E', delta);
+		if (key.isKeyDown(Input.KEY_UP) || key.isKeyDown(Input.KEY_Z) || key.isKeyDown(Input.KEY_W)) deplacer('N', delta);
+		if (key.isKeyDown(Input.KEY_DOWN) || key.isKeyDown(Input.KEY_S)) deplacer('S', delta);
+		if (key.isKeyDown(Input.KEY_LEFT) || key.isKeyDown(Input.KEY_Q) || key.isKeyDown(Input.KEY_A)) deplacer('O', delta);
+		if (key.isKeyDown(Input.KEY_RIGHT) || key.isKeyDown(Input.KEY_D)) deplacer('E', delta);
+		
+		// Click souris
+		if (key.isMousePressed(Input.MOUSE_LEFT_BUTTON)) tirer();
 		
 		rotate(mouseX, mouseY);
+		
+		for (Bullet b:bullets)
+		{		
+			b.update(delta);
+			
+			if (currentTime - b.getTimeCreation() >= 1000)
+				bulletsToRemove.add(b);
+		}
+		
+		for (Bullet b:bulletsToRemove)
+			bullets.remove(b);
+	}
+	
+	public void destroyBullet(Bullet bullet)
+	{
+		bullets.remove(bullet);
 	}
 	
 	public void render(Graphics g) {
 		g.drawImage(getMustache(), x, y);
+		g.drawString("Instance bullets "+bullets.size(), 10, 25);
 		
-		g.drawString("Angle"+rotation, 10, 50);
+		for (Bullet b:bullets)
+			b.render(g);
 	}
 	
 	public Image getMustache() {
