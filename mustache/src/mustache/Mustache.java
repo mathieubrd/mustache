@@ -1,6 +1,7 @@
 package mustache;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -65,6 +66,10 @@ public class Mustache
 		if (key.isKeyDown(Input.KEY_LEFT)) deplacer('O', delta);
 		if (key.isKeyDown(Input.KEY_RIGHT)) deplacer('E', delta);
 		
+	}
+	
+	public void render(Graphics g) {
+		g.drawImage(getMustache(), .getX(), getY());
 	}
 	
 	public Image getMustache() {
