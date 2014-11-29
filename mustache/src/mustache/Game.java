@@ -22,7 +22,7 @@ public class Game extends BasicGame
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
 		map.render(g);
-		g.drawAnimation(mustache.getAnimation()[mustache.getDirection() + (mustache.getMoving() ? 4 : 0)], mustache.getX() - 32, mustache.getY() - 60);
+		g.drawImage(mustache.getMustache(), mustache.getX(), mustache.getY());
 		monster.render();
 	}
 

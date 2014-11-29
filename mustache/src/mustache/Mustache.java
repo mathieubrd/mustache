@@ -1,6 +1,7 @@
 package mustache;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -12,9 +13,8 @@ public class Mustache
 	private float y;
 	private int   width;
 	private int   height;
-	private Animation[] animations = new Animation[8];
+	private Image mustache;
 	private boolean moving;
-	private int direction;
 	private double speed;
 	
 	public Mustache(int w, int h) {
@@ -25,7 +25,6 @@ public class Mustache
 	public void init()
 	{
 		this.moving = false;
-		this.direction = 0;
 				
 		this.speed = 0.2;
 		
@@ -34,15 +33,7 @@ public class Mustache
 		
 		try
 		{
-			SpriteSheet spriteSheet = new SpriteSheet("res/sprites/mustache.jpg", 179, 180);
-			this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
-	        this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
-	        this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
-	        this.animations[3] = loadAnimation(spriteSheet, 0, 1, 3);
-	        this.animations[4] = loadAnimation(spriteSheet, 1, 2, 0);
-	        this.animations[5] = loadAnimation(spriteSheet, 1, 2, 1);
-	        this.animations[6] = loadAnimation(spriteSheet, 1, 2, 2);
-	        this.animations[7] = loadAnimation(spriteSheet, 1, 2, 3);
+			mustache = new Image("res/sprites/mustache.jpg");
 		}
 		
 		catch (SlickException e)
@@ -53,7 +44,13 @@ public class Mustache
 	
 	public void deplacer(char dir, int delta)
 	{
-		
+		switch (dir)
+		{
+			case 'N': y -= speed * delta; break;
+			case 'S': y += speed * delta; break;
+			case 'E': x += speed * delta; break;
+			case 'O': x -= speed * delta; break;
+		}
 	}
 	
 	public void update(GameContainer gc, int delta)
@@ -63,27 +60,15 @@ public class Mustache
 		int mouseX = key.getMouseX();
 		int mouseY = key.getMouseY();
 		
-		if(mouseY < y) y -= speed * delta;
-		if(mouseY > y) y += speed * delta;
-		if(mouseX > x) x += speed * delta;
-		if(mouseX < x) x -= speed * delta;
+		if (key.isKeyDown(Input.KEY_UP)) deplacer('N', delta);
+		if (key.isKeyDown(Input.KEY_DOWN)) deplacer('S', delta);
+		if (key.isKeyDown(Input.KEY_LEFT)) deplacer('O', delta);
+		if (key.isKeyDown(Input.KEY_RIGHT)) deplacer('E', delta);
 		
 	}
 	
-	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
-        Animation animation = new Animation();
-        for (int x = startX; x < endX; x++) {
-            animation.addFrame(spriteSheet.getSprite(x, y), 100);
-        }
-        return animation;
-    }
-	
-	public Animation[] getAnimation() {
-		return this.animations;
-	}
-	
-	public int getDirection() {
-		return this.direction;
+	public Image getMustache() {
+		return this.mustache;
 	}
 	
 	public float getX() {
