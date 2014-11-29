@@ -10,6 +10,7 @@ public class Game extends BasicGame
 {
 	private Map      map;
 	private Mustache mustache;
+	private Monster monster;
 	
 	public Game(String title)
 	{
@@ -20,12 +21,14 @@ public class Game extends BasicGame
 	{
 		map.render(g);
 		g.drawAnimation(mustache.getAnimation()[mustache.getDirection() + (mustache.getMoving() ? 4 : 0)], mustache.getX() - 32, mustache.getY() - 60);
+		monster.render();
 	}
 
 	public void init(GameContainer gc) throws SlickException
 	{
 		map = new Map();
 		mustache = new Mustache(gc.getWidth(), gc.getHeight());
+		monster = new Monster();
 		
 		map.init();
 		mustache.init();
@@ -33,7 +36,7 @@ public class Game extends BasicGame
 
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
-		
+		monster.update(gc, delta);
 	}
 	
 	public static void main(String[] args)

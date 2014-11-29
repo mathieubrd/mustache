@@ -16,7 +16,8 @@ public class Mustache
 	private int direction;
 	
 	public Mustache(int w, int h) {
-		
+		this.width  = w;
+		this.height = h;
 	}
 	
 	public void init()
@@ -24,11 +25,9 @@ public class Mustache
 		this.moving = false;
 		this.direction = 0;
 				
-		this.width  = w;
-		this.height = h;
 		
-		x = w/2 - 90;
-		y = h/2 - 90;
+		x = this.width/2 - 90;
+		y = this.height/2 - 90;
 		
 		try
 		{
