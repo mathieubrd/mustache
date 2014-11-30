@@ -29,7 +29,7 @@ public class Game extends BasicGame
 		g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.red);
 		mustache.render(g);
-		monster.render();
+		monster.render(gc, g);
 		g.setColor(Color.white);
 	}
 
@@ -42,6 +42,7 @@ public class Game extends BasicGame
 		
 		map.init();
 		mustache.init(gc.getWidth()/2, gc.getHeight()/2);
+		monster.init(gc);
 		
 		sound.play();
 	}

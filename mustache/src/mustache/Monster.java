@@ -1,8 +1,11 @@
 package mustache;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.particles.ParticleEmitter;
+import org.newdawn.slick.particles.ParticleSystem;
 
 public class Monster
 {
@@ -29,7 +32,11 @@ public class Monster
 		speed = 0.07;
 	}
 	
-	public void render()
+	public void init(GameContainer gc)
+	{
+	}
+	
+	public void render(GameContainer gc, Graphics g)
 	{
 		sprite.draw(x ,y);
 	}
