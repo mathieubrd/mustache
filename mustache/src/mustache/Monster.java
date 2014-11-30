@@ -1,9 +1,11 @@
 package mustache;
 
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Monster
@@ -11,7 +13,8 @@ public class Monster
 	private float x;
 	private float y;
 	private double speed;
-	private Image sprite;
+	private SpriteSheet sprite;
+	private Animation anim;
 	private int width;
 	private int height;
 	private Rectangle hitbox;
@@ -23,9 +26,10 @@ public class Monster
 		{
 			this.x = x;
 			this.y = y;
-			sprite = new Image("res/ia.png");
-			width = sprite.getWidth();
-			height = sprite.getHeight();
+			sprite = new SpriteSheet("res/sprites/shears.png", 64, 64);
+			anim = new Animation(sprite, 200);
+			width = sprite.getSprite(0, 0).getWidth();
+			height = sprite.getSprite(0, 0).getHeight();
 			hitbox = new Rectangle(x, y, width, height);
 			this.game = game;
 			
@@ -39,10 +43,7 @@ public class Monster
 	
 	public void render(GameContainer gc, Graphics g)
 	{
-		sprite.draw(x ,y);
-		
-		// Rendu de la hitbox
-		g.drawRect(hitbox.getX(), hitbox.getY(), hitbox.getWidth(), hitbox.getHeight());
+		anim.draw(x ,y);
 	}
 	
 	public float getX()

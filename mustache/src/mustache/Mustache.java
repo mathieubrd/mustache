@@ -179,6 +179,10 @@ public class Mustache
 	}
 
 	public void collision(Rectangle hbM) {
+<<<<<<< HEAD
+		if (hbM.intersects(hitbox))
+			life--;
+=======
 		
 		Long currentTime = System.currentTimeMillis();
 		
@@ -194,5 +198,6 @@ public class Mustache
 			isAtakable = true;
 		}
 		
+>>>>>>> branch 'master' of https://github.com/mathieubrochard/mustache.git
 	}
 }
