@@ -14,6 +14,8 @@ import org.newdawn.slick.Sound;
 
 public class Game extends BasicGame
 {
+	public static boolean menu = true;
+	
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
 	
@@ -22,6 +24,8 @@ public class Game extends BasicGame
 	private Sound   sound;
 	private Image background;
 	private ArrayList<Monster> monstersToRemove;
+	private GameContainer gc;
+	private String sentence = null;
 	
 	public Game(String title)
 	{
@@ -30,38 +34,63 @@ public class Game extends BasicGame
 
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		g.drawImage(background, 0, 0);
-		g.setColor(Color.red);
-		mustache.render(g);
-		g.setColor(Color.white);
-		
-		for (Monster m:monsters) m.render(gc, g);
+		if(!Game.menu) {
+			g.drawImage(background, 0, 0);
+			g.setColor(Color.red);
+			mustache.render(g);
+			g.setColor(Color.white);
+			
+			for (Monster m:monsters) m.render(gc, g);
+		}
+		else {
+			g.drawString("Echap pour quitter", 4,4);
+			g.drawImage(new Image("res/sprites/title.png"), 0, 20);
+			g.drawString("Pressed SPACE for play", gc.getWidth()/2-100, gc.getHeight()/2);
+			if(this.sentence != null) g.drawString("" + this.sentence, gc.getWidth()/2-120, gc.getHeight()/2+20);
+		}
 	}
 
 	public void init(GameContainer gc) throws SlickException
 	{
-		mustache = new Mustache();
-		monsters = new ArrayList<Monster>();
-		sound = new Sound("res/sound/piou.ogg");
-		
-		monstersToRemove = new ArrayList<Monster>();
-		
-		background = new Image("res/background.png");
-		
-		mustache.init(this, gc.getWidth()/2, gc.getHeight()/2);
-		
-		sound.play();
-		
-		for (int i = 0; i < 10; i++)
+		if(!Game.menu) {
+			mustache = new Mustache();
+			monsters = new ArrayList<Monster>();
+			sound = new Sound("res/sound/piou.ogg");
+			
+			monstersToRemove = new ArrayList<Monster>();
+			
+			background = new Image("res/background.png");
+			
+			mustache.init(this, gc.getWidth()/2, gc.getHeight()/2);
+			
+			sound.play();
+			
+			createMonster(gc);
+			
+			// Son de fond
+			//SoundEffect.play("MusiqueLoop", true, 100);
+		}
+		else {
+			this.gc = gc;
+		}
+	}
+	
+	public void createMonster(GameContainer gc) {
+		for (int i = 0; i < mustache.getNbMonster(); i++)
 		{
-			int depX = (int)(Math.random() * (gc.getWidth()-0)) + 0;
-			int depY = (int)(Math.random() * (gc.getHeight()-0)) + 0;
+			int depX = 0;
+			int depY = 0;
+			
+			while(depX > -10 && depX < gc.getWidth() + 10) {
+				depX = (int) (-100 + (Math.random()*((gc.getWidth()+300)-100)));
+			} 
+			
+			depY = (int)(-100 + (Math.random() * (gc.getHeight()+300)-100));
 		
+			System.out.println(depX + " " + depY);
+
 			monsters.add(new Monster(this,depX, depY));
 		}
-		
-		// Son de fond
-		//SoundEffect.play("MusiqueLoop", true, 100);
 	}
 	
 	public ArrayList<Monster> getMonsters()
@@ -76,26 +105,62 @@ public class Game extends BasicGame
 
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
+		if(!Game.menu) {
+				
+			mustache.update(gc, delta);
+			
+			for (Monster m:monsters) {
+				m.update(gc, delta, mustache.getX(), mustache.getY());
+				mustache.collision(m.getHitbox());
+			}
+			
+			for(Monster m : monstersToRemove)
+			{
+				monsters.remove(m);
+			}
+			
+			if(getMonsters().size()<1) {
+				createMonster(gc);
+				mustache.setWave();
+				mustache.setNbMonster();
+				mustache.setScore(100);
+			}
+		}
+		
 		Input key = gc.getInput();
-		
 		if (key.isKeyPressed(Input.KEY_ESCAPE)) gc.exit();
-		
-		mustache.update(gc, delta);
-		
-		for (Monster m:monsters) {
-			m.update(gc, delta, mustache.getX(), mustache.getY());
-			mustache.collision(m.getHitbox());
-		}
-		
-		for(Monster m : monstersToRemove)
-		{
-			monsters.remove(m);
-		}
 	}
 	
 	public void removeMonster(Monster monster)
 	{
 		monstersToRemove.add(monster);
+	}
+	
+	public Mustache getMustache() {
+		return this.mustache;
+	}
+	
+	public void keyPressed(int key, char c) {
+		if(Game.menu && key == Input.KEY_SPACE) { 	
+			Game.menu = false;
+			try {
+				this.init(gc);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void setMenu() {
+		Game.menu = true;
+	}
+	
+	public GameContainer getGc() {
+		return gc;
+	}
+	
+	public void setSentence(String str) {
+		this.sentence = str;
 	}
 	
 	public static void main(String[] args)
@@ -106,6 +171,7 @@ public class Game extends BasicGame
 		{
 			AppGameContainer agc = new AppGameContainer(game);
 			
+			agc.setShowFPS(false);
 			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
 			agc.setTargetFrameRate(60);
 			agc.start();

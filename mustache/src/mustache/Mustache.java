@@ -32,15 +32,21 @@ public class Mustache
 	private Long lastCurrentTime;
 	private boolean bool;
 	private Image shield;
-
+	private int score;
+	private int wave;
+	private int nbMonster;
+	
 	public void init(Game game, float x, float y)
 	{	
 		this.speed = 0.35;
-		this.life = 4;
+		this.life = 3;
 		this.lose = false;
 		this.isAtackable = true;
 		this.lastCurrentTime = (long) 0;
 		this.bool = false;
+		this.wave = 1;
+		this.score = 0;
+		this.nbMonster = 10;
 		
 		try
 		{
@@ -154,19 +160,27 @@ public class Mustache
 		bulletsToRemove.add(bullet);
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g) throws SlickException {
+		if(this.lose) {
+			game.setMenu();
+			game.init(game.getGc());
+			game.setSentence(this.score + " points, recommencez !");
+		}
+		
 		anim.draw(x, y);
-		g.drawString("Instance bullets "+bullets.size(), 10, 25);
+			
+		// Ajout du shield
+		if (!isAtackable)
+			g.drawImage(shield, x, y-20);
+		
+		//g.drawString("Instance bullets "+bullets.size(), 10, 25);
 		
 		for (Bullet b:bullets)
 			b.render(g);
 		
-		g.drawString("" + life, 100, 90);
-		if(this.lose) g.drawString("LOSER", 100,100);
-		
-		// Ajout du shield
-		if (!isAtackable)
-			g.drawImage(shield, x, y-20);
+		g.drawString("Vie   : " + life, 5, 10);
+		g.drawString("Score : " + this.score, 5, 30);
+		g.drawString("Vague : " + this.wave, 5, 50);
 	}
 	
 	public Rectangle getHitbox() {
@@ -199,5 +213,21 @@ public class Mustache
 		if(currentTime - lastCurrentTime >= 2000) {
 			isAtackable = true;
 		}
+	}
+
+	public void setScore(int s) {
+		this.score += s;
+	}
+
+	public int getNbMonster() {
+		return this.nbMonster;
+	}
+	
+	public void setNbMonster() {
+		this.nbMonster *= 1.2;
+	}
+
+	public void setWave() {
+		this.wave += 1;
 	}
 }
