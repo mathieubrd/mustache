@@ -10,6 +10,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Game extends BasicGame
 {
@@ -47,6 +48,14 @@ public class Game extends BasicGame
 		mustache.init(this, gc.getWidth()/2, gc.getHeight()/2);
 		
 		sound.play();
+		
+		for (int i = 0; i < 10; i++)
+		{
+			int depX = (int)(Math.random() * (gc.getWidth()-0)) + 0;
+			int depY = (int)(Math.random() * (gc.getHeight()-0)) + 0;
+		
+			monsters.add(new Monster(this,depX, depY));
+		}
 	}
 	
 	public ArrayList<Monster> getMonsters()
