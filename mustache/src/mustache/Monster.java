@@ -39,7 +39,7 @@ public class Monster
 		{
 			e.printStackTrace();
 		}
-		
+
 		speed = 0.07;
 	}
 	
