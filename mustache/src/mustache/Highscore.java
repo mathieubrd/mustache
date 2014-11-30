@@ -12,10 +12,10 @@ abstract class Highscore {
 	
 	public static int[] read() {
 		Scanner scanner = null;
-		File fr = new File("res/Highscore.txt");
-		
+		File fichier = new File("res/Highscore.txt");
+		if(!fichier.exists()) Highscore.createFile();
 		try {
-			scanner = new Scanner(new FileReader(fr));
+			scanner = new Scanner(new FileReader(fichier));
 			
 			String str = null;
 			while (scanner.hasNextLine()) {
@@ -31,12 +31,15 @@ abstract class Highscore {
 			e.printStackTrace();
 		}
 		
+		
 		return null;
 	}
 	
 	public static void write(int hS, int hW) {
 		PrintWriter ecrivain;
-
+		File fichier = new File("res/Highscore.txt");
+		if(!fichier.exists()) Highscore.createFile();
+		
 	    try {
 			ecrivain =  new PrintWriter(new FileWriter("res/Highscore.txt"));
 			ecrivain.println(hS + "," + hW);
@@ -45,5 +48,19 @@ abstract class Highscore {
 			e.printStackTrace();
 		}
 	    
+	}
+	
+	public static void createFile() {
+		PrintWriter ecrivain;
+		File file = new File("res/Highscore.txt");
+		
+		try {
+			file.createNewFile();
+			ecrivain =  new PrintWriter(new FileWriter("res/Highscore.txt"));
+			ecrivain.println("0,0");
+		    ecrivain.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

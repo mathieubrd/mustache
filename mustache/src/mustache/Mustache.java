@@ -173,7 +173,7 @@ public class Mustache
 			Highscore.write(getHighscore(), gethighwave());
 			game.setMenu();
 			game.init(game.getGc());
-			game.setSentence(this.score + " points, recommencez !");
+			game.setSentence(this.score + " points, try again !");
 		}
 		
 		anim.draw(x, y);
