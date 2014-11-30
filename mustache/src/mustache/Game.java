@@ -35,9 +35,15 @@ public class Game extends BasicGame
 
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
+		int[] tabInt = Highscore.read();
+		
+		mustache.setHighscore(tabInt[0]);
+		mustache.setHighwave(tabInt[0]);
+		
 		if(!Game.menu) {
 			g.drawImage(background, 0, 0);
 			g.setColor(Color.red);
+			g.drawString("Highscore : " + mustache.getHighscore() + ", wave : " + mustache.gethighwave(), gc.getWidth()/2-110,4);
 			mustache.render(g);
 			g.setColor(Color.white);
 			
@@ -45,7 +51,8 @@ public class Game extends BasicGame
 		}
 		else {
 			g.drawString("Echap pour quitter", 4,4);
-			g.drawImage(new Image("res/sprites/title.png"), 0, 20);
+			g.drawString("Highscore : " + tabInt[0] + ", wave : " + tabInt[1], gc.getWidth()/2-110,4);
+			g.drawImage(new Image("res/sprites/title.png"), 0, 35);
 			g.drawString("Pressed SPACE for play", gc.getWidth()/2-100, gc.getHeight()/2);
 			if(this.sentence != null) g.drawString("" + this.sentence, gc.getWidth()/2-120, gc.getHeight()/2+20);
 		}
@@ -69,7 +76,7 @@ public class Game extends BasicGame
 			createMonster(gc);
 			
 			// Son de fond
-			//SoundEffect.play("MusiqueLoop", true, 100);
+			SoundEffect.play("MusiqueLoop", true, 100);
 		}
 		else {
 			this.gc = gc;

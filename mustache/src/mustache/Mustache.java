@@ -36,6 +36,8 @@ public class Mustache
 	private int wave;
 	private int nbMonster;
 	
+	
+	
 	public void init(Game game, float x, float y)
 	{	
 		this.speed = 0.35;
