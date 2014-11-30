@@ -161,7 +161,6 @@ public class Mustache
 		
 		if(this.highscore < this.score) this.highscore = this.score;
 		if(this.highwave  < this.wave ) this.highwave = this.wave;
-		System.out.println(this.highscore);
 	}
 	
 	public void destroyBullet(Bullet bullet)
@@ -171,6 +170,7 @@ public class Mustache
 	
 	public void render(Graphics g) throws SlickException {
 		if(this.lose) {
+			Highscore.write(getHighscore(), gethighwave());
 			game.setMenu();
 			game.init(game.getGc());
 			game.setSentence(this.score + " points, recommencez !");
@@ -238,7 +238,6 @@ public class Mustache
 	public void setWave() {
 		this.wave += 1;
 	}
-<<<<<<< HEAD
 
 	public void setHighscore(int h) {
 		this.highscore = h;
@@ -255,9 +254,7 @@ public class Mustache
 	public int getHighscore() {
 		return highscore;
 	}
-=======
 	
 	public float getX() { return x; }
 	public float getY() { return y; }
->>>>>>> branch 'master' of https://github.com/mathieubrochard/mustache.git
 }

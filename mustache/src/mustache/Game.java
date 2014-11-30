@@ -37,25 +37,21 @@ public class Game extends BasicGame
 		int[] tabInt = Highscore.read();
 
 		if(!Game.menu) {
-			mustache.setHighscore(tabInt[0]);
-			mustache.setHighwave(tabInt[1]);
 			g.drawImage(background, 0, 0);
 			g.setColor(Color.red);
 			mustache.render(g);
 			g.setColor(Color.white);
+			
+			mustache.setHighscore(tabInt[0]);
+			mustache.setHighwave(tabInt[1]);
 			
 			for (Monster m:monsters) m.render(gc, g);
 		}
 		else {
 			g.drawString("Highscore : " + tabInt[0] + ", wave : " + tabInt[1], gc.getWidth()/2-110,4);
 			g.drawString("Echap pour quitter", 4,4);
-<<<<<<< HEAD
 			g.drawImage(new Image("res/sprites/title.png"), 0, 35);
-			g.drawString("Pressed SPACE for play", gc.getWidth()/2-100, gc.getHeight()/2);
-=======
-			g.drawImage(new Image("res/sprites/title.png"), 0, 20);
 			g.drawString("Press SPACE to play", gc.getWidth()/2-100, gc.getHeight()/2);
->>>>>>> branch 'master' of https://github.com/mathieubrochard/mustache.git
 			if(this.sentence != null) g.drawString("" + this.sentence, gc.getWidth()/2-120, gc.getHeight()/2+20);
 		}
 	}
@@ -90,8 +86,6 @@ public class Game extends BasicGame
 			
 			depY = (int)(-100 + (Math.random() * (gc.getHeight()+300)-100));
 		
-			System.out.println(depX + " " + depY);
-
 			if (i % 2 == 0)
 				monsters.add(new Shears(depX, depY, this));
 			else

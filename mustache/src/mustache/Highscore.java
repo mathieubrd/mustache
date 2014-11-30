@@ -1,7 +1,11 @@
 package mustache;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 abstract class Highscore {
@@ -28,7 +32,16 @@ abstract class Highscore {
 		return null;
 	}
 	
-	public static void write() {
-		
+	public static void write(int hS, int hW) {
+		PrintWriter ecrivain;
+
+	    try {
+			ecrivain =  new PrintWriter(new FileWriter("res/Highscore.txt"));
+			ecrivain.println(hS + "," + hW);
+		    ecrivain.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    
 	}
 }
