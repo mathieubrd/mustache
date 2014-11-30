@@ -51,6 +51,12 @@ public class Monster
 		rotation = Math.toDegrees(rotation);
 		
 		anim.getCurrentFrame().setRotation((float) rotation);
+		
+		// Rotate la frame apres la frame courante pour eviter le clignotement
+		if (anim.getFrame() == anim.getFrameCount()-1)
+			anim.getImage(0).setRotation((float) rotation);
+		else
+			anim.getImage(anim.getFrame()+1).setRotation((float) rotation);
 	}
 	
 	public void render(GameContainer gc, Graphics g)
