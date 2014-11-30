@@ -45,7 +45,7 @@ public class Bullet
 	
 	public void render(Graphics g)
 	{
-		g.drawImage(bullet, hitbox.getX()-width/2, hitbox.getY()-height/2);
+		bullet.draw(x, y);
 		
 		bullet.setRotation(this.angle);
 	}

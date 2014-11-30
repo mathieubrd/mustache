@@ -63,14 +63,14 @@ public class Game extends BasicGameState
 		SoundEffect.play("MusiqueLoop", true, 100);
 	}
 	
-	public ArrayList<Monster> getMonsters()
-	{
-		return monsters;
-	}
-	
 	public void destroyMonster(Monster monster)
 	{
 		monstersToRemove.add(monster);
+	}
+	
+	public ArrayList<Monster> getMonsters()
+	{
+		return monsters;
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
