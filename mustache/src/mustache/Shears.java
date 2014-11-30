@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Monster
+public class Shears
 {
 	private float x;
 	private float y;
@@ -24,7 +24,7 @@ public class Monster
 	private Game game;
 	private boolean isDead;
 	
-	public Monster(Game game, float x, float y)
+	public Shears(Game game, float x, float y)
 	{
 		try
 		{
@@ -124,7 +124,7 @@ public class Monster
 	{
 		isDead = true;
 		
-		SoundEffect.play("mort", false, 1);
+		SoundEffect.play("mort", false, (float)0.3);
 	}
 
 	public void update(GameContainer gc, int delta, float persoX, float persoY)
@@ -137,6 +137,9 @@ public class Monster
 			if (persoY > getY()) deplacer('S', delta);
 			else deplacer('N', delta);
 		}
+		
+		// DŽsactivation hitbox quand dead
+		else hitbox.setSize(0, 0);
 		
 		this.persoX = persoX;
 		this.persoY = persoY;

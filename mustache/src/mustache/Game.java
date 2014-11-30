@@ -20,10 +20,10 @@ public class Game extends BasicGame
 	public static final int HEIGHT = 600;
 	
 	private Mustache mustache;
-	private ArrayList<Monster> monsters;
+	private ArrayList<Shears> monsters;
 	private Sound   sound;
 	private Image background;
-	private ArrayList<Monster> monstersToRemove;
+	private ArrayList<Shears> monstersToRemove;
 	private GameContainer gc;
 	private String sentence = null;
 	
@@ -40,7 +40,7 @@ public class Game extends BasicGame
 			mustache.render(g);
 			g.setColor(Color.white);
 			
-			for (Monster m:monsters) m.render(gc, g);
+			for (Shears m:monsters) m.render(gc, g);
 		}
 		else {
 			g.drawString("Echap pour quitter", 4,4);
@@ -54,10 +54,10 @@ public class Game extends BasicGame
 	{
 		if(!Game.menu) {
 			mustache = new Mustache();
-			monsters = new ArrayList<Monster>();
+			monsters = new ArrayList<Shears>();
 			sound = new Sound("res/sound/piou.ogg");
 			
-			monstersToRemove = new ArrayList<Monster>();
+			monstersToRemove = new ArrayList<Shears>();
 			
 			background = new Image("res/background.png");
 			
@@ -68,7 +68,7 @@ public class Game extends BasicGame
 			createMonster(gc);
 			
 			// Son de fond
-			//SoundEffect.play("MusiqueLoop", true, 100);
+			SoundEffect.play("MusiqueLoop", true, 100);
 		}
 		else {
 			this.gc = gc;
@@ -89,49 +89,21 @@ public class Game extends BasicGame
 		
 			System.out.println(depX + " " + depY);
 
-			monsters.add(new Monster(this,depX, depY));
+			monsters.add(new Shears(this,depX, depY));
 		}
 	}
 	
-	public ArrayList<Monster> getMonsters()
+	public ArrayList<Shears> getMonsters()
 	{
 		return monsters;
 	}
 	
-	public void destroyMonster(Monster monster)
+	public void destroyMonster(Shears monster)
 	{
 		monster.kill();
 	}
 
-	public void update(GameContainer gc, int delta) throws SlickException
-	{
-		if(!Game.menu) {
-				
-			mustache.update(gc, delta);
-			
-			for (Monster m:monsters) {
-				m.update(gc, delta, mustache.getX(), mustache.getY());
-				mustache.collision(m.getHitbox());
-			}
-			
-			for(Monster m : monstersToRemove)
-			{
-				monsters.remove(m);
-			}
-			
-			if(getMonsters().size()<1) {
-				createMonster(gc);
-				mustache.setWave();
-				mustache.setNbMonster();
-				mustache.setScore(100);
-			}
-		}
-		
-		Input key = gc.getInput();
-		if (key.isKeyPressed(Input.KEY_ESCAPE)) gc.exit();
-	}
-	
-	public void removeMonster(Monster monster)
+	public void removeMonster(Shears monster)
 	{
 		monstersToRemove.add(monster);
 	}
@@ -151,18 +123,46 @@ public class Game extends BasicGame
 		}
 	}
 	
-	public void setMenu() {
-		Game.menu = true;
-	}
-	
 	public GameContainer getGc() {
 		return gc;
 	}
 	
+	public void setMenu() {
+		Game.menu = true;
+	}
+
 	public void setSentence(String str) {
 		this.sentence = str;
 	}
 	
+	public void update(GameContainer gc, int delta) throws SlickException
+	{
+		if(!Game.menu) {
+				
+			mustache.update(gc, delta);
+			
+			for (Shears m:monsters) {
+				m.update(gc, delta, mustache.getX(), mustache.getY());
+				mustache.collision(m.getHitbox());
+			}
+			
+			for(Shears m : monstersToRemove)
+			{
+				monsters.remove(m);
+			}
+			
+			if(getMonsters().size()<1) {
+				createMonster(gc);
+				mustache.setWave();
+				mustache.setNbMonster();
+				mustache.setScore(100);
+			}
+		}
+		
+		Input key = gc.getInput();
+		if (key.isKeyPressed(Input.KEY_ESCAPE)) gc.exit();
+	}
+
 	public static void main(String[] args)
 	{
 		Game game = new Game("Mustache Invaders");
@@ -172,7 +172,7 @@ public class Game extends BasicGame
 			AppGameContainer agc = new AppGameContainer(game);
 			
 			agc.setShowFPS(false);
-			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
+			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, true);
 			agc.setTargetFrameRate(60);
 			agc.start();
 		}
