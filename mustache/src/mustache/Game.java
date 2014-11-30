@@ -1,5 +1,7 @@
 package mustache;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -16,7 +18,7 @@ public class Game extends BasicGame
 	
 	private Map      map;
 	private Mustache mustache;
-	private Monster monster;
+	private ArrayList<Monster> monsters;
 	private Sound   sound;
 	
 	public Game(String title)
@@ -29,27 +31,27 @@ public class Game extends BasicGame
 		g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.red);
 		mustache.render(g);
-		monster.render(gc, g);
 		g.setColor(Color.white);
+		
+		for (Monster m:monsters) m.render(gc, g);
 	}
 
 	public void init(GameContainer gc) throws SlickException
 	{
 		map = new Map();
 		mustache = new Mustache();
-		monster = new Monster();
+		monsters = new ArrayList<Monster>();
 		sound = new Sound("res/sound/piou.ogg");
 		
 		map.init();
 		mustache.init(this, gc.getWidth()/2, gc.getHeight()/2);
-		monster.init(gc);
 		
 		sound.play();
 	}
 	
-	public Monster getMonster()
+	public ArrayList<Monster> getMonsters()
 	{
-		return monster;
+		return monsters;
 	}
 
 	public void update(GameContainer gc, int delta) throws SlickException
@@ -59,7 +61,8 @@ public class Game extends BasicGame
 		if (key.isKeyPressed(Input.KEY_ESCAPE)) gc.exit();
 		
 		mustache.update(gc, delta);
-		monster.update(gc, delta, mustache.getX(), mustache.getY());
+		
+		for (Monster m:monsters) m.update(gc, delta, mustache.getX(), mustache.getY());
 	}
 	
 	public static void main(String[] args)

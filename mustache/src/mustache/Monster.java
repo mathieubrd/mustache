@@ -33,10 +33,6 @@ public class Monster
 		speed = 0.07;
 	}
 	
-	public void init(GameContainer gc)
-	{
-	}
-	
 	public void render(GameContainer gc, Graphics g)
 	{
 		sprite.draw(x ,y);

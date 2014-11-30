@@ -47,8 +47,11 @@ public class Bullet
 		hitbox.setY(y);
 		
 		// Collision avec monstre
-		if (game.getMonster().getHitbox().intersects(hitbox))
-			mustache.destroyBullet(this);
+		for (Monster m:game.getMonsters())
+		{
+			if (m.getHitbox().intersects(hitbox))
+				mustache.destroyBullet(this);
+		}
 	}
 	
 	public long getTimeCreation() { return timeCreation; }
