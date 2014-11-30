@@ -38,6 +38,7 @@ public class Monster
 			width = sprite.getSprite(0, 0).getWidth();
 			height = sprite.getSprite(0, 0).getHeight();
 			hitbox = new Rectangle(x, y, width, height);
+			this.game = game;
 			isDead = false;
 			
 			deadAnim.setLooping(false);

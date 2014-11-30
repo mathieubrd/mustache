@@ -91,11 +91,11 @@ public class Mustache
 				break;
 			case 'S': 
 				y += speed * delta; 
-				if(getY() > App.HEIGHT) y = App.HEIGHT - height/2;
+				if(getY() > Game.HEIGHT) y = Game.HEIGHT - height/2;
 				break;
 			case 'E': 
 				x += speed * delta; 
-				if(getX() > App.WIDTH) x = App.WIDTH - width/2;
+				if(getX() > Game.WIDTH) x = Game.WIDTH - width/2;
 				break;
 			case 'O': 
 				x -= speed * delta; 
