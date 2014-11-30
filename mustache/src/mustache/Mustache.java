@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Mustache
 {
@@ -23,15 +24,21 @@ public class Mustache
 	private Animation anim;
 	private SpriteSheet sprite;
 	private Game game;
+	private Rectangle hitbox;
+	private int life;
+	private boolean lose;
 
 	public void init(Game game, float x, float y)
 	{	
-		speed = 0.35;
+		this.speed = 0.35;
+		this.life = 3;
+		this.lose = false;
 		
 		try
 		{
 			sprite = new SpriteSheet("res/sprites/moustache.png", 64, 32);
 			anim   = new Animation  (sprite, 200);
+			hitbox = new Rectangle(x, y, width, height);
 			
 			this.x = x-(sprite.getWidth()/2);
 			this.y = y-(sprite.getHeight()/2);
@@ -123,6 +130,11 @@ public class Mustache
 		
 		for (Bullet b:bulletsToRemove)
 			bullets.remove(b);
+		
+		hitbox.setX(x);
+		hitbox.setY(y);
+		
+		if(this.life <= 0) this.lose = true;
 	}
 	
 	public void destroyBullet(Bullet bullet)
@@ -136,6 +148,12 @@ public class Mustache
 		
 		for (Bullet b:bullets)
 			b.render(g);
+		
+		if(this.lose) g.drawString("LOSER", 100,100);
+	}
+	
+	public Rectangle getHitbox() {
+		return hitbox;
 	}
 	
 	public float getX() {
@@ -148,5 +166,10 @@ public class Mustache
 	
 	public boolean getMoving() {
 		return this.moving;
+	}
+
+	public void collision(Rectangle hbM) {
+		if(hitbox.intersects(hbM))
+			this.life--;
 	}
 }

@@ -62,7 +62,10 @@ public class Game extends BasicGame
 		
 		mustache.update(gc, delta);
 		
-		for (Monster m:monsters) m.update(gc, delta, mustache.getX(), mustache.getY());
+		for (Monster m:monsters) {
+			m.update(gc, delta, mustache.getX(), mustache.getY());
+			mustache.collision(m.getHitbox());
+		}
 	}
 	
 	public static void main(String[] args)
