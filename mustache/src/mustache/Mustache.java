@@ -19,10 +19,12 @@ public class Mustache
 	private int height;
 	private double rotation;
 	private ArrayList<Bullet> bullets;
+	private ArrayList<Bullet> bulletsToRemove;
 	private Animation anim;
 	private SpriteSheet sprite;
+	private Game game;
 
-	public void init(float x, float y)
+	public void init(Game game, float x, float y)
 	{	
 		speed = 0.35;
 		
@@ -38,6 +40,8 @@ public class Mustache
 			height = sprite.getSprite(0, 0).getHeight();
 			
 			bullets = new ArrayList<Bullet>();
+			bulletsToRemove = new ArrayList<Bullet>();
+			this.game = game;
 		}
 		
 		catch (SlickException e)
@@ -95,7 +99,6 @@ public class Mustache
 	{
 		Input key = gc.getInput();
 		long  currentTime = System.currentTimeMillis();
-		ArrayList<Bullet> bulletsToRemove = new ArrayList<Bullet>();
 		
 		int mouseX = key.getMouseX();
 		int mouseY = key.getMouseY();
@@ -112,7 +115,7 @@ public class Mustache
 		
 		for (Bullet b:bullets)
 		{		
-			b.update(delta);
+			b.update(game, delta);
 			
 			if (currentTime - b.getTimeCreation() >= 1000)
 				bulletsToRemove.add(b);
@@ -124,7 +127,7 @@ public class Mustache
 	
 	public void destroyBullet(Bullet bullet)
 	{
-		bullets.remove(bullet);
+		bulletsToRemove.add(bullet);
 	}
 	
 	public void render(Graphics g) {

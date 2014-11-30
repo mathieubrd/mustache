@@ -41,10 +41,15 @@ public class Game extends BasicGame
 		sound = new Sound("res/sound/piou.ogg");
 		
 		map.init();
-		mustache.init(gc.getWidth()/2, gc.getHeight()/2);
+		mustache.init(this, gc.getWidth()/2, gc.getHeight()/2);
 		monster.init(gc);
 		
 		sound.play();
+	}
+	
+	public Monster getMonster()
+	{
+		return monster;
 	}
 
 	public void update(GameContainer gc, int delta) throws SlickException
@@ -65,7 +70,7 @@ public class Game extends BasicGame
 		{
 			AppGameContainer agc = new AppGameContainer(game);
 			
-			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, true);
+			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
 			agc.start();
 		}
 		
