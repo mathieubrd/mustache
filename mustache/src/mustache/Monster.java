@@ -18,8 +18,6 @@ public class Monster
 	private int width;
 	private int height;
 	private Rectangle hitbox;
-	private float persoX;
-	private float persoY;
 	private Game game;
 	
 	public Monster(Game game, float x, float y)
@@ -39,18 +37,8 @@ public class Monster
 		{
 			e.printStackTrace();
 		}
-
-		speed = 0.07;
-	}
-	
-	public void rotate()
-	{
-		double rotation;
 		
-		rotation = Math.atan2(persoY-y, persoX-x);
-		rotation = Math.toDegrees(rotation);
-		
-		anim.getCurrentFrame().setRotation((float) rotation);
+		speed = 0.01 + (Math.random() * (0.15 - 0.01));
 	}
 	
 	public void render(GameContainer gc, Graphics g)
@@ -106,11 +94,6 @@ public class Monster
 		
 		if (persoY > getY()) deplacer('S', delta);
 		else deplacer('N', delta);
-		
-		this.persoX = persoX;
-		this.persoY = persoY;
-		
-		rotate();
 		
 		// Update hitbox
 		hitbox.setX(x);
