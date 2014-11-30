@@ -15,15 +15,19 @@ public class Monster
 	private int width;
 	private int height;
 	private Rectangle hitbox;
+	private Game game;
 	
-	public Monster()
+	public Monster(Game game, float x, float y)
 	{
 		try
 		{
+			this.x = x;
+			this.y = y;
 			sprite = new Image("res/ia.png");
 			width = sprite.getWidth();
 			height = sprite.getHeight();
 			hitbox = new Rectangle(x, y, width, height);
+			this.game = game;
 			
 		}catch (SlickException e)
 		{
@@ -54,14 +58,41 @@ public class Monster
 	public Rectangle getHitbox() {
 		return hitbox;
 	}
+	
+	public void deplacer(char dir, int delta)
+	{
+		switch (dir)
+		{
+			case 'N':
+				y -= speed*delta;
+				break;
+			case 'S':
+				y += speed*delta;
+				break;
+			case 'E':
+				x += speed*delta;
+				break;
+			case 'O':
+				x -= speed*delta;
+				break;
+		}
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
 
 	public void update(GameContainer gc, int delta, float persoX, float persoY)
 	{
-		if (persoX > getX()) x += speed*delta;
-		else x -= speed*delta;
+		if (persoX > getX()) deplacer('E', delta);
+		else deplacer('O', delta);
 		
-		if (persoY > getY()) y += speed*delta;
-		else y -= speed*delta;
+		if (persoY > getY()) deplacer('S', delta);
+		else deplacer('N', delta);
 		
 		// Update hitbox
 		hitbox.setX(x);
