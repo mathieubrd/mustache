@@ -74,7 +74,7 @@ public class Mustache
 	
 	public void rotate(int mouseX, int mouseY)
 	{
-		rotation = Math.atan2(mouseY-getY(), mouseX-getX());
+		rotation = Math.atan2(mouseY-getMidY(), mouseX-getMidX());
 		rotation = Math.toDegrees(rotation)+90;
 		
 		anim.getCurrentFrame().setRotation((float) rotation);
@@ -93,28 +93,28 @@ public class Mustache
 		{
 			case 'N': 
 				y -= speed * delta; 
-				if(getY() < 0) y = 0 - height/2;
+				if(getMidY() < 0) y = 0 - height/2;
 				break;
 			case 'S': 
 				y += speed * delta; 
-				if(getY() > Game.HEIGHT) y = Game.HEIGHT - height/2;
+				if(getMidY() > Game.HEIGHT) y = Game.HEIGHT - height/2;
 				break;
 			case 'E': 
 				x += speed * delta; 
-				if(getX() > Game.WIDTH) x = Game.WIDTH - width/2;
+				if(getMidX() > Game.WIDTH) x = Game.WIDTH - width/2;
 				break;
 			case 'O': 
 				x -= speed * delta; 
-				if(getX() < 0) x = 0 - width/2;
+				if(getMidX() < 0) x = 0 - width/2;
 				break;
 		}
 	}
 	
 	public void shoot()
 	{
-		bullets.add(new Bullet(game, this, (float) rotation, getX(), getY()));
+		bullets.add(new Bullet(game, this, (float) rotation, getMidX(), getMidY()));
 		
-		SoundEffect.play("piou", false, (float) 0.4);
+		SoundEffect.play("piou", false, (float) 0.3);
 	}
 	
 	public void update(GameContainer gc, int delta)
@@ -187,11 +187,11 @@ public class Mustache
 		return hitbox;
 	}
 	
-	public float getX() {
+	public float getMidX() {
 		return this.x+(width/2);
 	}
 	
-	public float getY() {
+	public float getMidY() {
 		return this.y+(height/2);
 	}
 	
@@ -230,4 +230,7 @@ public class Mustache
 	public void setWave() {
 		this.wave += 1;
 	}
+	
+	public float getX() { return x; }
+	public float getY() { return y; }
 }

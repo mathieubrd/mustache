@@ -45,7 +45,7 @@ public class Game extends BasicGame
 		else {
 			g.drawString("Echap pour quitter", 4,4);
 			g.drawImage(new Image("res/sprites/title.png"), 0, 20);
-			g.drawString("Pressed SPACE for play", gc.getWidth()/2-100, gc.getHeight()/2);
+			g.drawString("Press SPACE to play", gc.getWidth()/2-100, gc.getHeight()/2);
 			if(this.sentence != null) g.drawString("" + this.sentence, gc.getWidth()/2-120, gc.getHeight()/2+20);
 		}
 	}
@@ -55,20 +55,13 @@ public class Game extends BasicGame
 		if(!Game.menu) {
 			mustache = new Mustache();
 			monsters = new ArrayList<Monster>();
-			sound = new Sound("res/sound/piou.ogg");
-			
 			monstersToRemove = new ArrayList<Monster>();
 			
 			background = new Image("res/background.png");
 			
 			mustache.init(this, gc.getWidth()/2, gc.getHeight()/2);
 			
-			sound.play();
-			
 			createMonster(gc);
-			
-			// Son de fond
-			SoundEffect.play("MusiqueLoop", true, 100);
 		}
 		else {
 			this.gc = gc;
@@ -89,7 +82,10 @@ public class Game extends BasicGame
 		
 			System.out.println(depX + " " + depY);
 
-			monsters.add(new Shears(depX, depY, this));
+			if (i % 2 == 0)
+				monsters.add(new Shears(depX, depY, this));
+			else
+				monsters.add(new Razor(depX, depY, this));
 		}
 	}
 	
@@ -166,6 +162,9 @@ public class Game extends BasicGame
 
 	public static void main(String[] args)
 	{
+		// Son de fond
+		SoundEffect.play("MusiqueLoop", true, 100);
+		
 		Game game = new Game("Mustache Invaders");
 		
 		try
