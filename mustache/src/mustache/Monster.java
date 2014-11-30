@@ -38,7 +38,7 @@ public class Monster
 			e.printStackTrace();
 		}
 		
-		speed = 0.07;
+		speed = 0.01 + (Math.random() * (0.15 - 0.01));
 	}
 	
 	public void render(GameContainer gc, Graphics g)
