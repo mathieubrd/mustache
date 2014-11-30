@@ -200,4 +200,11 @@ public class Mustache
 			isAtackable = true;
 		}
 	}
+
+	public boolean destroyMonster(Rectangle hbx) {
+		for(Bullet b : bullets) 
+			if(hbx.intersects(b.getHitbox())) return true;
+
+		return false;
+	}
 }

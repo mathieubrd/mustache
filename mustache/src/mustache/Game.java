@@ -21,6 +21,7 @@ public class Game extends BasicGame
 	private ArrayList<Monster> monsters;
 	private Sound   sound;
 	private Image background;
+	private ArrayList<Monster> monstersToRemove;
 	
 	public Game(String title)
 	{
@@ -42,6 +43,8 @@ public class Game extends BasicGame
 		mustache = new Mustache();
 		monsters = new ArrayList<Monster>();
 		sound = new Sound("res/sound/piou.ogg");
+		
+		monstersToRemove = new ArrayList<Monster>();
 		
 		background = new Image("res/background.png");
 		
@@ -77,6 +80,13 @@ public class Game extends BasicGame
 		for (Monster m:monsters) {
 			m.update(gc, delta, mustache.getX(), mustache.getY());
 			mustache.collision(m.getHitbox());
+			
+			if(mustache.destroyMonster(m.getHitbox()))
+				monstersToRemove.add(m);
+		}
+		
+		for(Monster m : monstersToRemove) {
+			monsters.remove(m);
 		}
 	}
 	

@@ -72,4 +72,8 @@ public class Bullet
 	}
 	
 	public long getTimeCreation() { return timeCreation; }
+	
+	public Rectangle getHitbox() {
+		return hitbox;
+	}
 }
