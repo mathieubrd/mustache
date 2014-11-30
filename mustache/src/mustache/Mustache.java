@@ -177,24 +177,7 @@ public class Mustache
 	}
 
 	public void collision(Rectangle hbM) {
-		
-		boolean bool = false;
-		
-		Long currentTime = System.currentTimeMillis();
-		
-		if(bool && hitbox.intersects(hbM))
-		{
-			bool = false;
-			this.life--;
-			lastCurrentTime = currentTime;
-			isAtakable = true;
-		}
-		
-		if(currentTime - lastCurrentTime >= 2000)
-		{
-			isAtakable = false;
-			bool = true;
-		}
-		
+		if (hbM.intersects(hitbox))
+			life--;
 	}
 }
