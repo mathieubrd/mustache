@@ -69,7 +69,7 @@ public class Game extends BasicGame
 			createMonster(gc);
 			
 			// Son de fond
-			//SoundEffect.play("MusiqueLoop", true, 100);
+			SoundEffect.play("MusiqueLoop", true, 100);
 		}
 		else {
 			this.gc = gc;
@@ -173,7 +173,7 @@ public class Game extends BasicGame
 			AppGameContainer agc = new AppGameContainer(game);
 			
 			agc.setShowFPS(false);
-			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
+			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, true);
 			agc.setTargetFrameRate(60);
 			agc.start();
 		}
