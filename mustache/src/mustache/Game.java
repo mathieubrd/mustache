@@ -89,6 +89,7 @@ public class Game extends BasicGame
 			AppGameContainer agc = new AppGameContainer(game);
 			
 			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
+			agc.setTargetFrameRate(60);
 			agc.start();
 		}
 		
