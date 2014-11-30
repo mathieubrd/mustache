@@ -1,11 +1,13 @@
 package mustache;
 
 import java.util.ArrayList;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -15,10 +17,10 @@ public class Game extends BasicGame
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
 	
-	private Map      map;
 	private Mustache mustache;
 	private ArrayList<Monster> monsters;
 	private Sound   sound;
+	private Image background;
 	
 	public Game(String title)
 	{
@@ -27,7 +29,7 @@ public class Game extends BasicGame
 
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
+		g.drawImage(background, 0, 0);
 		g.setColor(Color.red);
 		mustache.render(g);
 		g.setColor(Color.white);
@@ -37,12 +39,12 @@ public class Game extends BasicGame
 
 	public void init(GameContainer gc) throws SlickException
 	{
-		map = new Map();
 		mustache = new Mustache();
 		monsters = new ArrayList<Monster>();
 		sound = new Sound("res/sound/piou.ogg");
 		
-		map.init();
+		background = new Image("res/background.png");
+		
 		mustache.init(this, gc.getWidth()/2, gc.getHeight()/2);
 		
 		sound.play();
@@ -54,6 +56,9 @@ public class Game extends BasicGame
 		
 			monsters.add(new Monster(this,depX, depY));
 		}
+		
+		// Son de fond
+		SoundEffect.play("MusiqueLoop", true, 100);
 	}
 	
 	public ArrayList<Monster> getMonsters()

@@ -105,7 +105,7 @@ public class Mustache
 	{
 		bullets.add(new Bullet(this, (float) rotation, getX(), getY()));
 		
-		SoundEffect.play("piou");
+		SoundEffect.play("piou", false, (float) 0.4);
 	}
 	
 	public void update(GameContainer gc, int delta)
