@@ -36,7 +36,8 @@ public class Mustache
 	private int wave;
 	private int nbMonster;
 	
-	
+	private int highscore;
+	private int highwave;
 	
 	public void init(Game game, float x, float y)
 	{	
@@ -49,6 +50,8 @@ public class Mustache
 		this.wave = 1;
 		this.score = 0;
 		this.nbMonster = 10;
+		this.highscore = 0;
+		this.highwave = 0;
 		
 		try
 		{
@@ -155,6 +158,10 @@ public class Mustache
 			this.lose = true;
 			this.life = 0;
 		}
+		
+		if(this.highscore < this.score) this.highscore = this.score;
+		if(this.highwave  < this.wave ) this.highwave = this.wave;
+		System.out.println(this.highscore);
 	}
 	
 	public void destroyBullet(Bullet bullet)
@@ -175,14 +182,13 @@ public class Mustache
 		if (!isAtackable)
 			g.drawImage(shield, x, y-20);
 		
-		//g.drawString("Instance bullets "+bullets.size(), 10, 25);
-		
 		for (Bullet b:bullets)
 			b.render(g);
 		
 		g.drawString("Vie   : " + life, 5, 10);
 		g.drawString("Score : " + this.score, 5, 30);
 		g.drawString("Vague : " + this.wave, 5, 50);
+		g.drawString("Highscore : " + this.highscore + ", wave : " + this.highwave, Game.WIDTH/2-110,4);
 	}
 	
 	public Rectangle getHitbox() {
@@ -231,5 +237,21 @@ public class Mustache
 
 	public void setWave() {
 		this.wave += 1;
+	}
+
+	public void setHighscore(int h) {
+		this.highscore = h;
+	}
+
+	public void setHighwave(int h) {
+		this.highwave = h;
+	}
+
+	public int gethighwave() {
+		return highwave;
+	}
+
+	public int getHighscore() {
+		return highscore;
 	}
 }
