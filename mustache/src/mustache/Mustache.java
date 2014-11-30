@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -27,16 +28,17 @@ public class Mustache
 	private Rectangle hitbox;
 	private int life;
 	private boolean lose;
-	private boolean isAtakable;
+	private boolean isAtackable;
 	private Long lastCurrentTime;
 	private boolean bool;
+	private Image shield;
 
 	public void init(Game game, float x, float y)
 	{	
 		this.speed = 0.35;
 		this.life = 4;
 		this.lose = false;
-		this.isAtakable = true;
+		this.isAtackable = true;
 		this.lastCurrentTime = (long) 0;
 		this.bool = false;
 		
@@ -45,6 +47,7 @@ public class Mustache
 			sprite = new SpriteSheet("res/sprites/moustache.png", 64, 32);
 			anim   = new Animation  (sprite, 200);
 			hitbox = new Rectangle(x, y, width, height);
+			shield = new Image("res/sprites/shield.png");
 			
 			this.x = x-(sprite.getWidth()/2);
 			this.y = y-(sprite.getHeight()/2);
@@ -160,6 +163,10 @@ public class Mustache
 		
 		g.drawString("" + life, 100, 90);
 		if(this.lose) g.drawString("LOSER", 100,100);
+		
+		// Ajout du shield
+		if (!isAtackable)
+			g.drawImage(shield, x, y-20);
 	}
 	
 	public Rectangle getHitbox() {
@@ -181,16 +188,16 @@ public class Mustache
 	public void collision(Rectangle hbM) {
 		Long currentTime = System.currentTimeMillis();
 		
-		if(isAtakable && bool)
+		if(isAtackable && bool)
 		{
 			this.life--;
 			lastCurrentTime = currentTime;
-			isAtakable = false;
+			isAtackable = false;
 		}
 		else bool = hitbox.intersects(hbM);
 		
 		if(currentTime - lastCurrentTime >= 2000) {
-			isAtakable = true;
+			isAtackable = true;
 		}
 	}
 }
