@@ -1,97 +1,31 @@
 package mustache;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Monster
-{
+public abstract class Monster {
 	private float x;
 	private float y;
 	private double speed;
-	private SpriteSheet deadSprite;
 	private SpriteSheet sprite;
+	private SpriteSheet deadSprite;
 	private Animation anim;
 	private Animation deadAnim;
-	private int width;
-	private int height;
-	private Rectangle hitbox;
-	private float persoX;
-	private float persoY;
-	private Game game;
+	private float width;
+	private float height;
 	private boolean isDead;
-	
-	public Monster(Game game, float x, float y)
-	{
-		try
-		{
-			this.x = x;
-			this.y = y;
-			sprite = new SpriteSheet("res/sprites/shears.png", 64, 64);
-			deadSprite = new SpriteSheet("res/sprites/dead_shears.png", 64, 64);
-			anim = new Animation(sprite, 200);
-			deadAnim = new Animation(deadSprite, 100);
-			width = sprite.getSprite(0, 0).getWidth();
-			height = sprite.getSprite(0, 0).getHeight();
-			hitbox = new Rectangle(x, y, width, height);
-			this.game = game;
-			isDead = false;
-			
-			deadAnim.setLooping(false);
-		}catch (SlickException e)
-		{
-			e.printStackTrace();
-		}
+	private Rectangle hitbox;
+	private Mustache mustache;
+	private Game game;
 
+	protected Monster(float x, float y, Game game) {
+		this.x = x;
+		this.y = y;
+		this.game = game;
 		speed = 0.04+(Math.random()*(0.24-0.04));
-	}
-	
-	public void rotate()
-	{
-		double rotation;
-		
-		rotation = Math.atan2(persoY-y, persoX-x);
-		rotation = Math.toDegrees(rotation);
-		
-		anim.getCurrentFrame().setRotation((float) rotation);
-		
-		// Rotate la frame apres la frame courante pour eviter le clignotement
-		if (anim.getFrame() == anim.getFrameCount()-1)
-			anim.getImage(0).setRotation((float) rotation);
-		else
-			anim.getImage(anim.getFrame()+1).setRotation((float) rotation);
-	}
-	
-	public void render(GameContainer gc, Graphics g)
-	{
-		if (!isDead) anim.draw(x ,y);
-		else
-		{
-			deadAnim.draw(x, y);
-			
-			if (deadAnim.getFrame() == deadAnim.getFrameCount()-1) {
-				game.removeMonster(this);
-				game.getMustache().setScore(10);
-			}
-		}
-	}
-	
-	public float getX()
-	{
-		return x+(width/2);
-	}
-	
-	public float getY()
-	{
-		return y+(height/2);
-	}
-	
-	public Rectangle getHitbox() {
-		return hitbox;
 	}
 	
 	public void deplacer(char dir, int delta)
@@ -112,40 +46,156 @@ public class Monster
 				break;
 		}
 	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
+	
+	public void rotate()
+	{
+		double rotation;
+		
+		rotation = Math.atan2(mustache.getY()-y, mustache.getX()-x);
+		rotation = Math.toDegrees(rotation);
+		
+		anim.getCurrentFrame().setRotation((float) rotation);
+		
+		// Rotate la frame apres la frame courante pour eviter le clignotement
+		if (anim.getFrame() == anim.getFrameCount()-1)
+			anim.getImage(0).setRotation((float) rotation);
+		else
+			anim.getImage(anim.getFrame()+1).setRotation((float) rotation);
 	}
 	
 	public void kill()
 	{
 		isDead = true;
 		
-		SoundEffect.play("mort", false, 1);
+		SoundEffect.play("mort", false, (float)0.3);
 	}
-
-	public void update(GameContainer gc, int delta, float persoX, float persoY)
+	
+	public void update(GameContainer gc, int delta, Mustache mustache)
 	{
+		this.mustache = mustache;
+		
 		if (!isDead)
 		{
-			if (persoX > getX()) deplacer('E', delta);
+			if (mustache.getX() > getX()) deplacer('E', delta);
 			else deplacer('O', delta);
 			
-			if (persoY > getY()) deplacer('S', delta);
+			if (mustache.getY() > getY()) deplacer('S', delta);
 			else deplacer('N', delta);
 		}
 		
-		this.persoX = persoX;
-		this.persoY = persoY;
-		
 		rotate();
 		
-		// Update hitbox
-		hitbox.setX(x);
-		hitbox.setY(y);
+		if (!isDead)
+		{
+			hitbox.setX(x);
+			hitbox.setY(y);
+		}
+		
+		else
+		{
+			hitbox.setX(0);
+			hitbox.setY(0);
+		}
+	}
+	
+	public void render(GameContainer gc, Graphics g)
+	{
+		if (isDead) {
+			deadAnim.draw(x, y);
+			
+			if (deadAnim.getFrame() == deadAnim.getFrameCount()-1) {
+				game.removeMonster(this);
+				game.getMustache().setScore(10);
+			}
+		}
+		else anim.draw(x ,y);
+	}
+
+	public float getX() {
+		return x+width/2;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public float getY() {
+		return y+height/2;
+	}
+
+	public void setY(float y) {
+		this.y = y;
+	}
+
+	public SpriteSheet getSprite() {
+		return sprite;
+	}
+
+	public void setSprite(SpriteSheet sprite) {
+		this.sprite = sprite;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+	
+	public Rectangle getHitbox() {
+		return hitbox;
+	}
+
+	public void setHitbox(Rectangle hitbox) {
+		this.hitbox = hitbox;
+	}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
+	}
+
+	public SpriteSheet getDeadSprite() {
+		return deadSprite;
+	}
+
+	public void setDeadSprite(SpriteSheet deadSprite) {
+		this.deadSprite = deadSprite;
+	}
+
+	public Animation getAnim() {
+		return anim;
+	}
+
+	public void setAnim(Animation anim) {
+		this.anim = anim;
+	}
+
+	public Animation getDeadAnim() {
+		return deadAnim;
+	}
+
+	public void setDeadAnim(Animation deadAnim) {
+		this.deadAnim = deadAnim;
 	}
 }

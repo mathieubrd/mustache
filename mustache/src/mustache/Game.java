@@ -11,7 +11,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.geom.Rectangle;
 
 public class Game extends BasicGame
 {
@@ -97,7 +96,7 @@ public class Game extends BasicGame
 		
 			System.out.println(depX + " " + depY);
 
-			monsters.add(new Monster(this,depX, depY));
+			monsters.add(new Shears(depX, depY, this));
 		}
 	}
 	
@@ -111,34 +110,6 @@ public class Game extends BasicGame
 		monster.kill();
 	}
 
-	public void update(GameContainer gc, int delta) throws SlickException
-	{
-		if(!Game.menu) {
-				
-			mustache.update(gc, delta);
-			
-			for (Monster m:monsters) {
-				m.update(gc, delta, mustache.getX(), mustache.getY());
-				mustache.collision(m.getHitbox());
-			}
-			
-			for(Monster m : monstersToRemove)
-			{
-				monsters.remove(m);
-			}
-			
-			if(getMonsters().size()<1) {
-				createMonster(gc);
-				mustache.setWave();
-				mustache.setNbMonster();
-				mustache.setScore(100);
-			}
-		}
-		
-		Input key = gc.getInput();
-		if (key.isKeyPressed(Input.KEY_ESCAPE)) gc.exit();
-	}
-	
 	public void removeMonster(Monster monster)
 	{
 		monstersToRemove.add(monster);
@@ -159,18 +130,47 @@ public class Game extends BasicGame
 		}
 	}
 	
-	public void setMenu() {
-		Game.menu = true;
-	}
-	
 	public GameContainer getGc() {
 		return gc;
 	}
 	
+	public void setMenu() {
+		Game.menu = true;
+	}
+
 	public void setSentence(String str) {
 		this.sentence = str;
 	}
 	
+	public void update(GameContainer gc, int delta) throws SlickException
+	{
+		if(!Game.menu) {
+				
+			mustache.update(gc, delta);
+			
+			for (Monster m:monsters) {
+				m.update(gc, delta, mustache);
+				
+				mustache.collision(m.getHitbox());
+			}
+			
+			for(Monster m : monstersToRemove)
+			{
+				monsters.remove(m);
+			}
+			
+			if(getMonsters().size()<1) {
+				createMonster(gc);
+				mustache.setWave();
+				mustache.setNbMonster();
+				mustache.setScore(100);
+			}
+		}
+		
+		Input key = gc.getInput();
+		if (key.isKeyPressed(Input.KEY_ESCAPE)) gc.exit();
+	}
+
 	public static void main(String[] args)
 	{
 		Game game = new Game("Mustache Invaders");
@@ -180,7 +180,7 @@ public class Game extends BasicGame
 			AppGameContainer agc = new AppGameContainer(game);
 			
 			agc.setShowFPS(false);
-			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
+			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, true);
 			agc.setTargetFrameRate(60);
 			agc.start();
 		}
