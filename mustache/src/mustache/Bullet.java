@@ -1,6 +1,12 @@
 package mustache;
 
+import java.util.ArrayList;
+
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -15,6 +21,8 @@ public class Bullet
 	private double   speed;
 	private long     timeCreation;
 	private Rectangle hitbox;
+	private Image bullet;
+	private float angle;
 	
 	public Bullet(Mustache mustache, float angle, float x, float y)
 	{
@@ -27,14 +35,23 @@ public class Bullet
 		height = 8;
 		timeCreation = System.currentTimeMillis();
 		hitbox = new Rectangle(x, y, width, height);
+		this.angle = angle;
+		
+		try
+		{
+			bullet = new Image("res/sprites/bulletMustache.png");
+		}
+		catch (SlickException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void render(Graphics g)
 	{
-		g.fillRect(x, y, width, height);
+		g.drawImage(bullet, hitbox.getX()-width/2, hitbox.getY()-height/2);
 		
-		// Rendu de la hitbox
-		g.drawRect(hitbox.getX(), hitbox.getY(), hitbox.getWidth(), hitbox.getHeight());
+		bullet.setRotation(this.angle);
 	}
 	
 	public void update(Game game, int delta)
