@@ -60,7 +60,7 @@ public class Bullet
 		hitbox.setY(y);
 		
 		// Collision avec monstre
-		for (Shears_back m:game.getMonsters())
+		for (Monster m:game.getMonsters())
 		{
 			if (m.getHitbox().intersects(hitbox))
 			{
