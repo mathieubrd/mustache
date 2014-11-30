@@ -103,7 +103,7 @@ public class Mustache
 	{
 		bullets.add(new Bullet(this, (float) rotation, getX(), getY()));
 		
-		SoundEffect.play("piou");
+		SoundEffect.play("piou", false, (float) 0.4);
 	}
 	
 	public void update(GameContainer gc, int delta)
@@ -177,23 +177,7 @@ public class Mustache
 	}
 
 	public void collision(Rectangle hbM) {
-<<<<<<< HEAD
 		if (hbM.intersects(hitbox))
 			life--;
-=======
-		
-		Long currentTime = System.currentTimeMillis();
-		
-		if(isAtakable && hitbox.intersects(hbM))
-		{
-			this.life--;
-			lastCurrentTime = currentTime;
-			isAtakable = false;
-		}
-		
-		if(currentTime - lastCurrentTime >= 2000)
-			isAtakable = true;
-		
->>>>>>> branch 'master' of https://github.com/mathieubrochard/mustache.git
 	}
 }
