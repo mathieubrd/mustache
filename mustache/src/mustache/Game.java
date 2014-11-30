@@ -20,10 +20,10 @@ public class Game extends BasicGame
 	public static final int HEIGHT = 600;
 	
 	private Mustache mustache;
-	private ArrayList<Shears> monsters;
+	private ArrayList<Shears_back> monsters;
 	private Sound   sound;
 	private Image background;
-	private ArrayList<Shears> monstersToRemove;
+	private ArrayList<Shears_back> monstersToRemove;
 	private GameContainer gc;
 	private String sentence = null;
 	
@@ -40,7 +40,7 @@ public class Game extends BasicGame
 			mustache.render(g);
 			g.setColor(Color.white);
 			
-			for (Shears m:monsters) m.render(gc, g);
+			for (Shears_back m:monsters) m.render(gc, g);
 		}
 		else {
 			g.drawString("Echap pour quitter", 4,4);
@@ -54,10 +54,10 @@ public class Game extends BasicGame
 	{
 		if(!Game.menu) {
 			mustache = new Mustache();
-			monsters = new ArrayList<Shears>();
+			monsters = new ArrayList<Shears_back>();
 			sound = new Sound("res/sound/piou.ogg");
 			
-			monstersToRemove = new ArrayList<Shears>();
+			monstersToRemove = new ArrayList<Shears_back>();
 			
 			background = new Image("res/background.png");
 			
@@ -89,21 +89,21 @@ public class Game extends BasicGame
 		
 			System.out.println(depX + " " + depY);
 
-			monsters.add(new Shears(this,depX, depY));
+			monsters.add(new Shears_back(this,depX, depY));
 		}
 	}
 	
-	public ArrayList<Shears> getMonsters()
+	public ArrayList<Shears_back> getMonsters()
 	{
 		return monsters;
 	}
 	
-	public void destroyMonster(Shears monster)
+	public void destroyMonster(Shears_back monster)
 	{
 		monster.kill();
 	}
 
-	public void removeMonster(Shears monster)
+	public void removeMonster(Shears_back monster)
 	{
 		monstersToRemove.add(monster);
 	}
@@ -141,12 +141,12 @@ public class Game extends BasicGame
 				
 			mustache.update(gc, delta);
 			
-			for (Shears m:monsters) {
+			for (Shears_back m:monsters) {
 				m.update(gc, delta, mustache.getX(), mustache.getY());
 				mustache.collision(m.getHitbox());
 			}
 			
-			for(Shears m : monstersToRemove)
+			for(Shears_back m : monstersToRemove)
 			{
 				monsters.remove(m);
 			}
