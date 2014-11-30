@@ -29,14 +29,16 @@ public class Mustache
 	private boolean lose;
 	private boolean isAtakable;
 	private Long lastCurrentTime;
+	private boolean bool;
 
 	public void init(Game game, float x, float y)
 	{	
 		this.speed = 0.35;
-		this.life = 3;
+		this.life = 4;
 		this.lose = false;
 		this.isAtakable = true;
 		this.lastCurrentTime = (long) 0;
+		this.bool = false;
 		
 		try
 		{
@@ -178,6 +180,27 @@ public class Mustache
 
 	public void collision(Rectangle hbM) {
 		if (hbM.intersects(hitbox))
+<<<<<<< HEAD
 			life--;
+=======
+			life--;
+=======
+		
+		Long currentTime = System.currentTimeMillis();
+		
+		if(isAtakable && bool)
+		{
+			this.life--;
+			lastCurrentTime = currentTime;
+			isAtakable = false;
+		}
+		else bool = hitbox.intersects(hbM);
+		
+		if(currentTime - lastCurrentTime >= 2000) {
+			isAtakable = true;
+		}
+		
+>>>>>>> branch 'master' of https://github.com/mathieubrochard/mustache.git
+>>>>>>> branch 'master' of https://github.com/mathieubrochard/mustache.git
 	}
 }
