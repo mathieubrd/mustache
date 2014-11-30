@@ -57,7 +57,6 @@ public class Mustache
 		{
 			sprite = new SpriteSheet("res/sprites/moustache.png", 64, 32);
 			anim   = new Animation  (sprite, 200);
-			hitbox = new Rectangle(x, y, width, height);
 			shield = new Image("res/sprites/shield.png");
 			
 			this.x = x-(sprite.getWidth()/2);
@@ -69,6 +68,7 @@ public class Mustache
 			bullets = new ArrayList<Bullet>();
 			bulletsToRemove = new ArrayList<Bullet>();
 			this.game = game;
+			hitbox = new Rectangle(x, y, width, height);
 		}
 		
 		catch (SlickException e)
@@ -117,7 +117,7 @@ public class Mustache
 	
 	public void shoot()
 	{
-		bullets.add(new Bullet(game, this, (float) rotation, getMidX(), getMidY()));
+		bullets.add(new Bullet(game, this, (float) rotation, getMidX(), getMidY(), true));
 		
 		SoundEffect.play("piou", false, (float) 0.3);
 	}
@@ -177,7 +177,7 @@ public class Mustache
 		}
 		
 		anim.draw(x, y);
-			
+		
 		// Ajout du shield
 		if (!isAtackable)
 			g.drawImage(shield, x, y-20);

@@ -2,6 +2,7 @@ package mustache;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
@@ -16,7 +17,7 @@ public class Shears extends Monster
 			setSprite(new SpriteSheet("res/sprites/shears.png", 64, 64));
 			setDeadSprite(new SpriteSheet("res/sprites/dead_shears.png", 64, 64));
 			setAnim(new Animation(getSprite(), 200));
-			setDeadAnim(new Animation(getDeadSprite(), 200));
+			setDeadAnim(new Animation(getDeadSprite(), 100));
 			setHitbox(new Rectangle(x, y, 64, 64));
 		} catch (SlickException e) {
 			e.printStackTrace();
@@ -51,12 +52,27 @@ public class Shears extends Monster
 		}
 	}
 	
+	public void render(GameContainer gc, Graphics g)
+	{
+		if (getIsDead()) {
+			getDeadAnim().draw(getX(), getY());
+			
+			if (getDeadAnim().getFrame() == getDeadAnim().getFrameCount()-1) {
+				getGame().removeMonster(this);
+				getGame().getMustache().setScore(10);
+			}
+		}
+		else getAnim().draw(getX(), getY());
+	}
+	
 	public void rotate()
 	{
 		double rotation;
 		
 		rotation = Math.atan2(getMustache().getY()-getY(), getMustache().getX()-getX());
 		rotation = Math.toDegrees(rotation);
+		
+		setRotation((float) rotation);
 		
 		getAnim().getCurrentFrame().setRotation((float) rotation);
 		

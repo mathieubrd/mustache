@@ -14,9 +14,8 @@ abstract class Highscore {
 		Scanner scanner = null;
 		File fichier = new File("res/Highscore.txt");
 		if(!fichier.exists()) Highscore.createFile();
-			
 		try {
-			scanner = new Scanner(new FileReader("res/Highscore.txt"));
+			scanner = new Scanner(new FileReader(fichier));
 			
 			String str = null;
 			while (scanner.hasNextLine()) {
