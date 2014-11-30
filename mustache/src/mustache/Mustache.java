@@ -149,6 +149,7 @@ public class Mustache
 		for (Bullet b:bullets)
 			b.render(g);
 		
+		g.drawString("" + life, 100, 90);
 		if(this.lose) g.drawString("LOSER", 100,100);
 	}
 	
