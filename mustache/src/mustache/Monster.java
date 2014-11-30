@@ -47,7 +47,7 @@ public class Monster
 			e.printStackTrace();
 		}
 
-		speed = 0.01+(Math.random()*(0.15-0.01));
+		speed = 0.04+(Math.random()*(0.24-0.04));
 	}
 	
 	public void rotate()
@@ -73,8 +73,10 @@ public class Monster
 		{
 			deadAnim.draw(x, y);
 			
-			if (deadAnim.getFrame() == deadAnim.getFrameCount()-1)
+			if (deadAnim.getFrame() == deadAnim.getFrameCount()-1) {
 				game.removeMonster(this);
+				game.getMustache().setScore(10);
+			}
 		}
 	}
 	
