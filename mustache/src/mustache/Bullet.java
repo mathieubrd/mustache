@@ -39,7 +39,10 @@ public class Bullet
 		
 		try
 		{
-			bullet = new Image("res/sprites/bulletMustache.png");
+			if (byMustache)
+				bullet = new Image("res/sprites/bulletMustache.png");
+			else
+				bullet = new Image("res/sprites/bullet_ennemy.png");
 		}
 		catch (SlickException e)
 		{

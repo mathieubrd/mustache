@@ -1,6 +1,6 @@
 package mustache;
 
-import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,8 +12,10 @@ abstract class Highscore {
 	
 	public static int[] read() {
 		Scanner scanner = null;
+		File fr = new File("res/Highscore.txt");
+		
 		try {
-			scanner = new Scanner(new FileReader("res/Highscore.txt"));
+			scanner = new Scanner(new FileReader(fr));
 			
 			String str = null;
 			while (scanner.hasNextLine()) {

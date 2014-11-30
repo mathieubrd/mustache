@@ -17,7 +17,7 @@ public class Shears extends Monster
 			setSprite(new SpriteSheet("res/sprites/shears.png", 64, 64));
 			setDeadSprite(new SpriteSheet("res/sprites/dead_shears.png", 64, 64));
 			setAnim(new Animation(getSprite(), 200));
-			setDeadAnim(new Animation(getDeadSprite(), 200));
+			setDeadAnim(new Animation(getDeadSprite(), 100));
 			setHitbox(new Rectangle(x, y, 64, 64));
 		} catch (SlickException e) {
 			e.printStackTrace();

@@ -23,7 +23,7 @@ public class Razor extends Monster
 			setSprite(new SpriteSheet("res/sprites/razor.png", 16, 48));
 			setDeadSprite(new SpriteSheet("res/sprites/dead_razor.png", 16, 48));
 			setAnim(new Animation(getSprite(), 200));
-			setDeadAnim(new Animation(getDeadSprite(), 200));
+			setDeadAnim(new Animation(getDeadSprite(), 100));
 			bullets = new ArrayList<Bullet>();
 			bulletsToRemove = new ArrayList<Bullet>(); 
 			setHitbox(new Rectangle(x, y, 64, 64));

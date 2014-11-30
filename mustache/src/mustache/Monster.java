@@ -61,7 +61,7 @@ public abstract class Monster {
 	{
 		isDead = true;
 		
-		SoundEffect.play("mort", false, (float)0.3);
+		SoundEffect.play("mort", false, (float)0.9);
 	}
 	
 	public abstract void render(GameContainer gc, Graphics g);
