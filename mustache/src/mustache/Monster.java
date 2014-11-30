@@ -19,6 +19,15 @@ public abstract class Monster {
 	private boolean isDead;
 	private Rectangle hitbox;
 	private Mustache mustache;
+	private float rotation;
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
+
 	private Game game;
 
 	protected Monster(float x, float y, Game game) {
@@ -55,20 +64,7 @@ public abstract class Monster {
 		SoundEffect.play("mort", false, (float)0.3);
 	}
 	
-	
-	
-	public void render(GameContainer gc, Graphics g)
-	{
-		if (isDead) {
-			deadAnim.draw(x, y);
-			
-			if (deadAnim.getFrame() == deadAnim.getFrameCount()-1) {
-				game.removeMonster(this);
-				game.getMustache().setScore(10);
-			}
-		}
-		else anim.draw(x ,y);
-	}
+	public abstract void render(GameContainer gc, Graphics g);
 	
 	public int getDistanceX()
 	{
@@ -186,5 +182,10 @@ public abstract class Monster {
 	public boolean getIsDead()
 	{
 		return isDead;
+	}
+	
+	public Game getGame()
+	{
+		return game;
 	}
 }

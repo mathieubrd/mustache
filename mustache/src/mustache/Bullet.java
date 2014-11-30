@@ -19,12 +19,15 @@ public class Bullet
 	private Rectangle hitbox;
 	private Image bullet;
 	private float angle;
+	private boolean byMustache;
 	
-	public Bullet(Game game, Mustache mustache, float angle, float x, float y)
+	public Bullet(Game game, Mustache mustache, float angle, float x, float y, boolean byMustache)
 	{
 		this.mustache = mustache;
 		vector = new Vector2f(angle+90);
-		speed  = 1;
+		
+		if (byMustache) speed = 1;
+		else speed  = 0.5;
 		this.x = x;
 		this.y = y;
 		width = 8;
@@ -32,6 +35,7 @@ public class Bullet
 		timeCreation = System.currentTimeMillis();
 		hitbox = new Rectangle(x, y, width, height);
 		this.angle = angle;
+		this.byMustache = byMustache;
 		
 		try
 		{
@@ -46,7 +50,6 @@ public class Bullet
 	public void render(Graphics g)
 	{
 		bullet.draw(x, y);
-		
 		bullet.setRotation(this.angle);
 	}
 	
@@ -59,13 +62,16 @@ public class Bullet
 		hitbox.setX(x);
 		hitbox.setY(y);
 		
-		// Collision avec monstre
-		for (Monster m:game.getMonsters())
+		// Collision avec monstre si by mustache
+		if (byMustache)
 		{
-			if (m.getHitbox().intersects(hitbox))
+			for (Monster m:game.getMonsters())
 			{
-				mustache.destroyBullet(this);
-				game.destroyMonster(m);
+				if (m.getHitbox().intersects(hitbox))
+				{
+					mustache.destroyBullet(this);
+					game.destroyMonster(m);
+				}
 			}
 		}
 	}

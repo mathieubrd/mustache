@@ -1,13 +1,20 @@
 package mustache;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Razor extends Monster
 {
+	private ArrayList<Bullet> bullets;
+	private ArrayList<Bullet> bulletsToRemove;
+	private long lastShoot;
+	
 	protected Razor(float x, float y, Game game) {
 		super(x, y, game);
 		
@@ -17,7 +24,10 @@ public class Razor extends Monster
 			setDeadSprite(new SpriteSheet("res/sprites/dead_razor.png", 16, 48));
 			setAnim(new Animation(getSprite(), 200));
 			setDeadAnim(new Animation(getDeadSprite(), 200));
+			bullets = new ArrayList<Bullet>();
+			bulletsToRemove = new ArrayList<Bullet>(); 
 			setHitbox(new Rectangle(x, y, 64, 64));
+			lastShoot = System.currentTimeMillis();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -42,6 +52,19 @@ public class Razor extends Monster
 				deplacer('N', delta);
 		}
 		
+		for (Bullet b:bullets) {
+			b.update(getGame(), delta);
+			
+			if (b.getHitbox().intersects(getMustache().getHitbox()))
+			{
+				bulletsToRemove.add(b);
+				mustache.collision(b.getHitbox());
+			}
+		}
+		
+		for (Bullet b:bulletsToRemove)
+			bullets.remove(b);
+		
 		rotate();
 		
 		if (!getIsDead())
@@ -55,6 +78,36 @@ public class Razor extends Monster
 			getHitbox().setX(0);
 			getHitbox().setY(0);
 		}
+		
+		// Tirer
+		long currentTime = System.currentTimeMillis();
+		
+		if (currentTime-lastShoot >= 2000)
+		{
+			shoot();
+			lastShoot = currentTime;
+		}
+	}
+	
+	public void render(GameContainer gc, Graphics g)
+	{
+		if (getIsDead()) {
+			getDeadAnim().draw(getX(), getY());
+			
+			if (getDeadAnim().getFrame() == getDeadAnim().getFrameCount()-1) {
+				getGame().removeMonster(this);
+				getGame().getMustache().setScore(10);
+			}
+		}
+		else getAnim().draw(getX(), getY());
+		
+		for (Bullet b:bullets) b.render(g);
+	}
+	
+	public void shoot()
+	{
+		if (!getIsDead())
+			bullets.add(new Bullet(getGame(), getMustache(), getRotation(), getX(), getY(), false));
 	}
 	
 	public void rotate()
@@ -63,6 +116,8 @@ public class Razor extends Monster
 		
 		rotation = Math.atan2(getMustache().getY()-getY(), getMustache().getX()-getX());
 		rotation = Math.toDegrees(rotation)+90;
+		
+		setRotation((float) rotation);
 		
 		getAnim().getCurrentFrame().setRotation((float) rotation);
 		
