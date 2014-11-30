@@ -72,7 +72,7 @@ public class Game extends BasicGame
 	
 	public void destroyMonster(Monster monster)
 	{
-		monstersToRemove.add(monster);
+		monster.kill();
 	}
 
 	public void update(GameContainer gc, int delta) throws SlickException
@@ -88,9 +88,15 @@ public class Game extends BasicGame
 			mustache.collision(m.getHitbox());
 		}
 		
-		for(Monster m : monstersToRemove) {
+		for(Monster m : monstersToRemove)
+		{
 			monsters.remove(m);
 		}
+	}
+	
+	public void removeMonster(Monster monster)
+	{
+		monstersToRemove.add(monster);
 	}
 	
 	public static void main(String[] args)

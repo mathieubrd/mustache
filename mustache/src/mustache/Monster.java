@@ -13,14 +13,17 @@ public class Monster
 	private float x;
 	private float y;
 	private double speed;
+	private SpriteSheet deadSprite;
 	private SpriteSheet sprite;
 	private Animation anim;
+	private Animation deadAnim;
 	private int width;
 	private int height;
 	private Rectangle hitbox;
 	private float persoX;
 	private float persoY;
 	private Game game;
+	private boolean isDead;
 	
 	public Monster(Game game, float x, float y)
 	{
@@ -29,12 +32,16 @@ public class Monster
 			this.x = x;
 			this.y = y;
 			sprite = new SpriteSheet("res/sprites/shears.png", 64, 64);
+			deadSprite = new SpriteSheet("res/sprites/dead_shears.png", 64, 64);
 			anim = new Animation(sprite, 200);
+			deadAnim = new Animation(deadSprite, 100);
 			width = sprite.getSprite(0, 0).getWidth();
 			height = sprite.getSprite(0, 0).getHeight();
 			hitbox = new Rectangle(x, y, width, height);
 			this.game = game;
+			isDead = false;
 			
+			deadAnim.setLooping(false);
 		}catch (SlickException e)
 		{
 			e.printStackTrace();
@@ -61,7 +68,14 @@ public class Monster
 	
 	public void render(GameContainer gc, Graphics g)
 	{
-		anim.draw(x ,y);
+		if (!isDead) anim.draw(x ,y);
+		else
+		{
+			deadAnim.draw(x, y);
+			
+			if (deadAnim.getFrame() == deadAnim.getFrameCount()-1)
+				game.removeMonster(this);
+		}
 	}
 	
 	public float getX()
@@ -104,14 +118,22 @@ public class Monster
 	public int getHeight() {
 		return height;
 	}
+	
+	public void kill()
+	{
+		isDead = true;
+	}
 
 	public void update(GameContainer gc, int delta, float persoX, float persoY)
 	{
-		if (persoX > getX()) deplacer('E', delta);
-		else deplacer('O', delta);
-		
-		if (persoY > getY()) deplacer('S', delta);
-		else deplacer('N', delta);
+		if (!isDead)
+		{
+			if (persoX > getX()) deplacer('E', delta);
+			else deplacer('O', delta);
+			
+			if (persoY > getY()) deplacer('S', delta);
+			else deplacer('N', delta);
+		}
 		
 		this.persoX = persoX;
 		this.persoY = persoY;
