@@ -11,6 +11,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Game extends BasicGame
 {
@@ -68,6 +69,11 @@ public class Game extends BasicGame
 	{
 		return monsters;
 	}
+	
+	public void destroyMonster(Monster monster)
+	{
+		monstersToRemove.add(monster);
+	}
 
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
@@ -80,9 +86,6 @@ public class Game extends BasicGame
 		for (Monster m:monsters) {
 			m.update(gc, delta, mustache.getX(), mustache.getY());
 			mustache.collision(m.getHitbox());
-			
-			if(mustache.destroyMonster(m.getHitbox()))
-				monstersToRemove.add(m);
 		}
 		
 		for(Monster m : monstersToRemove) {

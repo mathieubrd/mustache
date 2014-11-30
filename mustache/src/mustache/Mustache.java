@@ -106,7 +106,7 @@ public class Mustache
 	
 	public void shoot()
 	{
-		bullets.add(new Bullet(this, (float) rotation, getX(), getY()));
+		bullets.add(new Bullet(game, this, (float) rotation, getX(), getY()));
 		
 		SoundEffect.play("piou", false, (float) 0.4);
 	}
@@ -199,12 +199,5 @@ public class Mustache
 		if(currentTime - lastCurrentTime >= 2000) {
 			isAtackable = true;
 		}
-	}
-
-	public boolean destroyMonster(Rectangle hbx) {
-		for(Bullet b : bullets) 
-			if(hbx.intersects(b.getHitbox())) return true;
-
-		return false;
 	}
 }

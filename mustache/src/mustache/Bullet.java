@@ -23,8 +23,9 @@ public class Bullet
 	private Rectangle hitbox;
 	private Image bullet;
 	private float angle;
+	private Game game;
 	
-	public Bullet(Mustache mustache, float angle, float x, float y)
+	public Bullet(Game game, Mustache mustache, float angle, float x, float y)
 	{
 		this.mustache = mustache;
 		vector = new Vector2f(angle+90);
@@ -67,7 +68,10 @@ public class Bullet
 		for (Monster m:game.getMonsters())
 		{
 			if (m.getHitbox().intersects(hitbox))
+			{
 				mustache.destroyBullet(this);
+				game.destroyMonster(m);
+			}
 		}
 	}
 	
