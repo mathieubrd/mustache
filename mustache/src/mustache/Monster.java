@@ -25,7 +25,6 @@ public abstract class Monster {
 		this.x = x;
 		this.y = y;
 		this.game = game;
-		speed = 0.04+(Math.random()*(0.24-0.04));
 	}
 	
 	public void deplacer(char dir, int delta)
@@ -47,21 +46,7 @@ public abstract class Monster {
 		}
 	}
 	
-	public void rotate()
-	{
-		double rotation;
-		
-		rotation = Math.atan2(mustache.getY()-y, mustache.getX()-x);
-		rotation = Math.toDegrees(rotation);
-		
-		anim.getCurrentFrame().setRotation((float) rotation);
-		
-		// Rotate la frame apres la frame courante pour eviter le clignotement
-		if (anim.getFrame() == anim.getFrameCount()-1)
-			anim.getImage(0).setRotation((float) rotation);
-		else
-			anim.getImage(anim.getFrame()+1).setRotation((float) rotation);
-	}
+	public abstract void rotate();
 	
 	public void kill()
 	{
@@ -70,33 +55,7 @@ public abstract class Monster {
 		SoundEffect.play("mort", false, (float)0.3);
 	}
 	
-	public void update(GameContainer gc, int delta, Mustache mustache)
-	{
-		this.mustache = mustache;
-		
-		if (!isDead)
-		{
-			if (mustache.getX() > getX()) deplacer('E', delta);
-			else deplacer('O', delta);
-			
-			if (mustache.getY() > getY()) deplacer('S', delta);
-			else deplacer('N', delta);
-		}
-		
-		rotate();
-		
-		if (!isDead)
-		{
-			hitbox.setX(x);
-			hitbox.setY(y);
-		}
-		
-		else
-		{
-			hitbox.setX(0);
-			hitbox.setY(0);
-		}
-	}
+	
 	
 	public void render(GameContainer gc, Graphics g)
 	{
@@ -110,6 +69,18 @@ public abstract class Monster {
 		}
 		else anim.draw(x ,y);
 	}
+	
+	public int getDistanceX()
+	{
+		return (int) Math.abs(getX()-mustache.getX());
+	}
+	
+	public int getDistanceY()
+	{
+		return (int) Math.abs(getY()-mustache.getY());
+	}
+	
+	public abstract void update(GameContainer gc, int delta, Mustache mustache);
 
 	public float getX() {
 		return x+width/2;
@@ -187,6 +158,10 @@ public abstract class Monster {
 		return anim;
 	}
 
+	public void setMustache(Mustache mustache) {
+		this.mustache = mustache;
+	}
+
 	public void setAnim(Animation anim) {
 		this.anim = anim;
 	}
@@ -197,5 +172,19 @@ public abstract class Monster {
 
 	public void setDeadAnim(Animation deadAnim) {
 		this.deadAnim = deadAnim;
+	}
+
+	public Mustache getMustache() {
+		return mustache;
+	}
+	
+	public void setIsDead(boolean isDead)
+	{
+		this.isDead = isDead;
+	}
+	
+	public boolean getIsDead()
+	{
+		return isDead;
 	}
 }
