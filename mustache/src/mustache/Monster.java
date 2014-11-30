@@ -1,7 +1,6 @@
 package mustache;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -20,7 +19,6 @@ public class Monster
 	private Rectangle hitbox;
 	private float persoX;
 	private float persoY;
-	private Game game;
 	
 	public Monster(Game game, float x, float y)
 	{
@@ -33,7 +31,6 @@ public class Monster
 			width = sprite.getSprite(0, 0).getWidth();
 			height = sprite.getSprite(0, 0).getHeight();
 			hitbox = new Rectangle(x, y, width, height);
-			this.game = game;
 			
 		}catch (SlickException e)
 		{

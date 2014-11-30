@@ -2,8 +2,6 @@ package mustache;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -11,12 +9,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class Game extends BasicGame
-{
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
+public class Game extends BasicGameState
+{	
+	public static int ID;
 	
 	private Mustache mustache;
 	private ArrayList<Monster> monsters;
@@ -24,12 +22,12 @@ public class Game extends BasicGame
 	private Image background;
 	private ArrayList<Monster> monstersToRemove;
 	
-	public Game(String title)
+	public Game(int id)
 	{
-		super(title);
+		Game.ID = id;
 	}
 
-	public void render(GameContainer gc, Graphics g) throws SlickException
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 	{
 		g.drawImage(background, 0, 0);
 		g.setColor(Color.red);
@@ -39,7 +37,7 @@ public class Game extends BasicGame
 		for (Monster m:monsters) m.render(gc, g);
 	}
 
-	public void init(GameContainer gc) throws SlickException
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
 		mustache = new Mustache();
 		monsters = new ArrayList<Monster>();
@@ -75,7 +73,7 @@ public class Game extends BasicGame
 		monstersToRemove.add(monster);
 	}
 
-	public void update(GameContainer gc, int delta) throws SlickException
+	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 	{
 		Input key = gc.getInput();
 		
@@ -92,23 +90,8 @@ public class Game extends BasicGame
 			monsters.remove(m);
 		}
 	}
-	
-	public static void main(String[] args)
-	{
-		Game game = new Game("Mustache Invaders");
-		
-		try
-		{
-			AppGameContainer agc = new AppGameContainer(game);
-			
-			agc.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
-			agc.setTargetFrameRate(60);
-			agc.start();
-		}
-		
-		catch (SlickException e)
-		{
-			e.printStackTrace();
-		}
+
+	public int getID() {
+		return Game.ID;
 	}
 }
