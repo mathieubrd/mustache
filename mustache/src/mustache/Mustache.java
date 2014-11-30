@@ -27,12 +27,16 @@ public class Mustache
 	private Rectangle hitbox;
 	private int life;
 	private boolean lose;
+	private boolean isAtakable;
+	private Long lastCurrentTime;
 
 	public void init(Game game, float x, float y)
 	{	
 		this.speed = 0.35;
 		this.life = 3;
 		this.lose = false;
+		this.isAtakable = true;
+		this.lastCurrentTime = (long) 0;
 		
 		try
 		{
@@ -134,7 +138,10 @@ public class Mustache
 		hitbox.setX(x);
 		hitbox.setY(y);
 		
-		if(this.life <= 0) this.lose = true;
+		if(this.life <= 0) {
+			this.lose = true;
+			this.life = 0;
+		}
 	}
 	
 	public void destroyBullet(Bullet bullet)
@@ -170,7 +177,24 @@ public class Mustache
 	}
 
 	public void collision(Rectangle hbM) {
-		if(hitbox.intersects(hbM))
+		
+		boolean bool = false;
+		
+		Long currentTime = System.currentTimeMillis();
+		
+		if(bool && hitbox.intersects(hbM))
+		{
+			bool = false;
 			this.life--;
+			lastCurrentTime = currentTime;
+			isAtakable = true;
+		}
+		
+		if(currentTime - lastCurrentTime >= 2000)
+		{
+			isAtakable = false;
+			bool = true;
+		}
+		
 	}
 }
