@@ -72,6 +72,11 @@ public class Game extends BasicGameState
 	{
 		return monsters;
 	}
+	
+	public void removeMonster(Monster monster)
+	{
+		monstersToRemove.add(monster);
+	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 	{
