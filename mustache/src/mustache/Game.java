@@ -62,7 +62,7 @@ public class Game extends BasicGame
 		}
 		
 		// Son de fond
-		SoundEffect.play("MusiqueLoop", true, 100);
+		//SoundEffect.play("MusiqueLoop", true, 100);
 	}
 	
 	public ArrayList<Monster> getMonsters()

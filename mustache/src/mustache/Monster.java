@@ -122,6 +122,8 @@ public class Monster
 	public void kill()
 	{
 		isDead = true;
+		
+		SoundEffect.play("mort", false, 1);
 	}
 
 	public void update(GameContainer gc, int delta, float persoX, float persoY)
