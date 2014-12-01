@@ -10,17 +10,23 @@ public abstract class SoundEffect
 		try
 		{
 			Sound sound = new Sound("res/sound/"+name+".ogg");
-			
+
 			sound.play(1, volume);
-			
+
 			if (loop) sound.loop();
 		} catch (SlickException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void play(String name) {
-		play(name, false, 1);
+		try {
+			Sound sound = new Sound("res/sound/"+name+".ogg");
+
+			sound.play();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 }
