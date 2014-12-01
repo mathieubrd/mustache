@@ -19,4 +19,8 @@ public abstract class SoundEffect
 			e.printStackTrace();
 		}
 	}
+	
+	public static void play(String name) {
+		play(name, false, 1);
+	}
 }
