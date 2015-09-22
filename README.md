@@ -1,5 +1,14 @@
-mustache
+M.U.S.T.A.C.H.E
 ========
 
+M.U.S.T.A.C.H.E (Mega Undercover Stach Testified Accrossed Conventionnal Humanity Elements).
 Jeu développé à l'occasion de la Viking Game Jam à Caen.
-Le thème de la Game Jam était : "Moustache".
+Le thème était : "moustache".
+
+Equipe :
+  - Mathieu Brochard
+  - Alexis Prevost-Maynen
+  - Thibaut Panchout
+  - Corentin Mangé
+  - Alexandre Lorcher
+
