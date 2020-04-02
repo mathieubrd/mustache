@@ -12,4 +12,4 @@ Equipe :
   - Corentin Mangé
   - Alexandre Lorcher
 
-Lien pour DL le jeu : http://alexisprevostmaynen.fr/portfolio/mustache/
+Lien pour DL le jeu : http://alexisprevostmaynen.fr/V2/portfolio/mustache/
